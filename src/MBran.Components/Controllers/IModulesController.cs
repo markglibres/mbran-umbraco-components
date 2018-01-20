@@ -5,7 +5,7 @@ namespace MBran.Components.Controllers
 {
     public interface IModulesController
     {
-        IPublishedContent PublishedContent { get; }
+        IPublishedContent Model { get; }
         string ModuleName { get; }
         PartialViewResult Render();
         string ViewPath { get; }

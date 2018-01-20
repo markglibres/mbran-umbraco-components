@@ -1,0 +1,14 @@
+﻿@inherits UmbracoViewPage<Home>
+
+<div class="page-content">
+    <h1>@Model.Title</h1>
+    <div class="description">@Model.Summary</div>
+</div>
+<div class="page-components">
+    @(Html.Module<MBran.Components.Test.Controllers.TestController>())
+    <h2>Page Components</h2>
+    @foreach (var component in Model.Components)
+    {
+        @Html.Component(component)
+    }
+</div>

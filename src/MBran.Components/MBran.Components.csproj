@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MBran.Components</RootNamespace>
     <AssemblyName>MBran.Components</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -81,9 +81,6 @@
     </Reference>
     <Reference Include="MarkdownSharp, Version=1.14.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Markdown.1.14.7\lib\net45\MarkdownSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="MBran.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MBran.Core.0.1\lib\net46\MBran.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=1.0.1559.20655, Culture=neutral">
       <HintPath>..\..\packages\UmbracoCms.Core.7.7.7\lib\net45\Microsoft.ApplicationBlocks.Data.dll</HintPath>
@@ -215,9 +212,14 @@
     <Compile Include="Controllers\IComponentsController.cs" />
     <Compile Include="Controllers\IModulesController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperComponentExtensions.cs" />
     <Compile Include="Extensions\HtmlHelperModuleExtensions.cs" />
+    <Compile Include="Extensions\PublishedContentExtensions.cs" />
+    <Compile Include="Extensions\ViewEngineExtensions.cs" />
     <Compile Include="Helpers\ComponentsHelper.cs" />
+    <Compile Include="Helpers\ModelsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
