@@ -45,11 +45,18 @@ namespace MBran.Components.Controllers
 
         protected virtual object GetViewModel()
         {
-            var modelType =
-                ModelsHelper.Instance.StronglyTypedPoco(
-                    this.ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString())
-                    ?? ModelsHelper.Instance.StronglyTypedPublishedContent(ComponentName);
+            var modelTypeQualifiedName = this.ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString();
+            Type modelType = null;
+            if (!string.IsNullOrWhiteSpace(modelTypeQualifiedName))
+            {
+                modelType = Type.GetType(modelTypeQualifiedName);
+            }
 
+            if (modelType == null)
+            {
+                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(ComponentName);
+            }
+            
             if (modelType == null)
             {
                 throw new Exception($"Cannot find component {ComponentName}");

@@ -37,7 +37,7 @@ namespace MBran.Components.Extensions
             where T : class
         {
             return helper.Component(typeof(T).Name, viewPath, model, routeValues,
-                typeof(T).FullName);
+                typeof(T).AssemblyQualifiedName);
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
@@ -57,7 +57,7 @@ namespace MBran.Components.Extensions
             RouteValueDictionary routeValues = null)
         {
             return helper.Component(model.GetDocumentTypeAlias(), string.Empty, model, routeValues, 
-                model.GetType().FullName);
+                model.GetType().AssemblyQualifiedName);
         }
 
         private static MvcHtmlString Component(this HtmlHelper helper, string componentName,

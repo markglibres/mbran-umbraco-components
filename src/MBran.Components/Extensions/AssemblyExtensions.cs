@@ -18,11 +18,13 @@ namespace MBran.Components.Extensions
 
         public static Type FindImplementation(this AppDomain domain, string objectFullName)
         {
-            return domain.GetAssemblies()
+            return domain
+                .GetAssemblies()
                 .Where(assembly => !assembly.GlobalAssemblyCache)
                 .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => type.FullName.Equals(objectFullName,StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault();
+                .FirstOrDefault(type => 
+                    type.FullName.Equals(objectFullName,StringComparison.InvariantCultureIgnoreCase)
+                    || type.AssemblyQualifiedName.Equals(objectFullName, StringComparison.InvariantCultureIgnoreCase));
         }
 
     }
