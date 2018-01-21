@@ -100,6 +100,69 @@ MODULES
 - with custom model passed
 - with custom view path pased
 
+========================
+COMPOSITIONS
+========================
+HasTextAndMedia
+	- Title
+	- Summary
+	- Image
+	
+HasComponents
+	- Components
+	
+HasMetaHeader
+	- Title
+	- Description
 
+=======================
+COMPONENTS
+=======================
+TextAndMediaLeft
+	- HasTextAndMedia
 
+TextAndMediaRight
+	- HasTextAndMedia
+=======================
+PAGES
+=======================
+Home
+	- HasTextAndMedia
+	- HasComponents
+	- HasMetaHeader
+=======================
+Content
+=======================
+Home 
+	- Components =>
+		- Text And Media Left
+		- Text And Media Right
+=======================
+TEMPLATES
+=======================
 
+Home (~/Views/Home.cshtml)
+	@inherits UmbracoViewPage<Home>
+	@foreach (var component in Model.Components)
+    {
+        @Html.Component(component)
+    }
+
+TextAndMediaLeft (~/Views/Components/TextAndMediaLeft.cshtml)
+	@model TextAndMediaLeft
+	<div class="text-media-left">
+		@(Html.Component<HasTextAndMedia>(Model))
+	</div>
+
+TextAndMediaRight (~/Views/Components/TextAndMediaRight.cshtml)
+	@model TextAndMediaRight
+	<div class="text-media-right">
+		@(Html.Component<HasTextAndMedia>(Model))
+	</div>
+	
+HasTextAndMedia (~/Views/Shared/HasTextAndMedia.cshtml)
+	@model TextAndMediaRight
+	@model HasTextAndMedia
+	<h3>@Model.TextMediaTitle</h3>
+	<div class="description">@Model.TextMediaSummary</div>
+	<img src="@Model.TextMediaImage.Url" />

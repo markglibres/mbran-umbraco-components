@@ -22,7 +22,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>Text and Media - Left</summary>
 	[PublishedContentModel("textAndMediaLeft")]
-	public partial class TextAndMediaLeft : PublishedContentModel, IHasImage, IHasSummary, IHasTitle
+	public partial class TextAndMediaLeft : PublishedContentModel, IHasTextAndMedia
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "textAndMediaLeft";
@@ -48,28 +48,28 @@ namespace Umbraco.Web.PublishedContentModels
 		///<summary>
 		/// Image
 		///</summary>
-		[ImplementPropertyType("image")]
-		public IPublishedContent Image
+		[ImplementPropertyType("textMediaImage")]
+		public IPublishedContent TextMediaImage
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasImage.GetImage(this); }
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaImage(this); }
 		}
 
 		///<summary>
 		/// Summary
 		///</summary>
-		[ImplementPropertyType("summary")]
-		public string Summary
+		[ImplementPropertyType("textMediaSummary")]
+		public string TextMediaSummary
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasSummary.GetSummary(this); }
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaSummary(this); }
 		}
 
 		///<summary>
 		/// Title
 		///</summary>
-		[ImplementPropertyType("title")]
-		public string Title
+		[ImplementPropertyType("textMediaTitle")]
+		public string TextMediaTitle
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasTitle.GetTitle(this); }
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaTitle(this); }
 		}
 	}
 }

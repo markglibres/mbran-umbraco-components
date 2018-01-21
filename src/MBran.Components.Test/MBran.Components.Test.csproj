@@ -295,6 +295,7 @@
     <Content Include="Views\Components\TextAndMediaLeft.cshtml" />
     <Content Include="Views\Components\TextAndMediaRight.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
+    <Content Include="Views\Partials\HasTextAndMedia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -333,11 +334,8 @@
     <Compile Include="App_Data\Models\File.generated.cs" />
     <Compile Include="App_Data\Models\Folder.generated.cs" />
     <Compile Include="App_Data\Models\HasComponents.generated.cs" />
-    <Compile Include="App_Data\Models\HasContent.generated.cs" />
-    <Compile Include="App_Data\Models\HasImage.generated.cs" />
     <Compile Include="App_Data\Models\HasMetaHeader.generated.cs" />
-    <Compile Include="App_Data\Models\HasSummary.generated.cs" />
-    <Compile Include="App_Data\Models\HasTitle.generated.cs" />
+    <Compile Include="App_Data\Models\HasTextAndMedia.generated.cs" />
     <Compile Include="App_Data\Models\Home.generated.cs" />
     <Compile Include="App_Data\Models\Image.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />

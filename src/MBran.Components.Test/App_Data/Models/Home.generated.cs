@@ -22,7 +22,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>Home</summary>
 	[PublishedContentModel("home")]
-	public partial class Home : PublishedContentModel, IHasComponents, IHasImage, IHasMetaHeader, IHasSummary, IHasTitle
+	public partial class Home : PublishedContentModel, IHasComponents, IHasMetaHeader, IHasTextAndMedia
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "home";
@@ -55,15 +55,6 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Image
-		///</summary>
-		[ImplementPropertyType("image")]
-		public IPublishedContent Image
-		{
-			get { return Umbraco.Web.PublishedContentModels.HasImage.GetImage(this); }
-		}
-
-		///<summary>
 		/// Description
 		///</summary>
 		[ImplementPropertyType("metaDescription")]
@@ -82,21 +73,30 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Image
+		///</summary>
+		[ImplementPropertyType("textMediaImage")]
+		public IPublishedContent TextMediaImage
+		{
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaImage(this); }
+		}
+
+		///<summary>
 		/// Summary
 		///</summary>
-		[ImplementPropertyType("summary")]
-		public string Summary
+		[ImplementPropertyType("textMediaSummary")]
+		public string TextMediaSummary
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasSummary.GetSummary(this); }
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaSummary(this); }
 		}
 
 		///<summary>
 		/// Title
 		///</summary>
-		[ImplementPropertyType("title")]
-		public string Title
+		[ImplementPropertyType("textMediaTitle")]
+		public string TextMediaTitle
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasTitle.GetTitle(this); }
+			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaTitle(this); }
 		}
 	}
 }

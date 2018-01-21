@@ -20,16 +20,30 @@ using Umbraco.ModelsBuilder.Umbraco;
 
 namespace Umbraco.Web.PublishedContentModels
 {
-	/// <summary>Text and Media - Right</summary>
-	[PublishedContentModel("textAndMediaRight")]
-	public partial class TextAndMediaRight : PublishedContentModel, IHasTextAndMedia
+	// Mixin content Type 1085 with alias "hasTextAndMedia"
+	/// <summary>_HasTextAndMedia</summary>
+	public partial interface IHasTextAndMedia : IPublishedContent
+	{
+		/// <summary>Image</summary>
+		IPublishedContent TextMediaImage { get; }
+
+		/// <summary>Summary</summary>
+		string TextMediaSummary { get; }
+
+		/// <summary>Title</summary>
+		string TextMediaTitle { get; }
+	}
+
+	/// <summary>_HasTextAndMedia</summary>
+	[PublishedContentModel("hasTextAndMedia")]
+	public partial class HasTextAndMedia : PublishedContentModel, IHasTextAndMedia
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "textAndMediaRight";
+		public new const string ModelTypeAlias = "hasTextAndMedia";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 #pragma warning restore 0109
 
-		public TextAndMediaRight(IPublishedContent content)
+		public HasTextAndMedia(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -40,7 +54,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<TextAndMediaRight, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<HasTextAndMedia, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
@@ -51,8 +65,11 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("textMediaImage")]
 		public IPublishedContent TextMediaImage
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaImage(this); }
+			get { return GetTextMediaImage(this); }
 		}
+
+		/// <summary>Static getter for Image</summary>
+		public static IPublishedContent GetTextMediaImage(IHasTextAndMedia that) { return that.GetPropertyValue<IPublishedContent>("textMediaImage"); }
 
 		///<summary>
 		/// Summary
@@ -60,8 +77,11 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("textMediaSummary")]
 		public string TextMediaSummary
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaSummary(this); }
+			get { return GetTextMediaSummary(this); }
 		}
+
+		/// <summary>Static getter for Summary</summary>
+		public static string GetTextMediaSummary(IHasTextAndMedia that) { return that.GetPropertyValue<string>("textMediaSummary"); }
 
 		///<summary>
 		/// Title
@@ -69,7 +89,10 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("textMediaTitle")]
 		public string TextMediaTitle
 		{
-			get { return Umbraco.Web.PublishedContentModels.HasTextAndMedia.GetTextMediaTitle(this); }
+			get { return GetTextMediaTitle(this); }
 		}
+
+		/// <summary>Static getter for Title</summary>
+		public static string GetTextMediaTitle(IHasTextAndMedia that) { return that.GetPropertyValue<string>("textMediaTitle"); }
 	}
 }
