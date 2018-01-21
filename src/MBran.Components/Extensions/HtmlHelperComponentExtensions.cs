@@ -79,7 +79,7 @@ namespace MBran.Components.Extensions
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
             options.Add(RouteDataConstants.ModelType, componentFullname);
 
-            return helper.Action(nameof(ComponentsController.Render), controllerName, options);
+            return helper.Action(nameof(IControllerRendering.Render), controllerName, options);
         }
 
     }

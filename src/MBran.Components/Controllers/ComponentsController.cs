@@ -8,7 +8,7 @@ using Umbraco.Web.Mvc;
 
 namespace MBran.Components.Controllers
 {
-    public class ComponentsController : SurfaceController, IComponentsController
+    public class ComponentsController : SurfaceController, IControllerRendering
     {
         public virtual IPublishedContent Model => RouteData
                     .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;

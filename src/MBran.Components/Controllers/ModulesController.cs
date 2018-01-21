@@ -6,7 +6,7 @@ using Umbraco.Web.Mvc;
 
 namespace MBran.Components.Controllers
 {
-    public abstract class ModulesController : SurfaceController, IModulesController
+    public abstract class ModulesController : SurfaceController, IControllerRendering
     {
         public virtual IPublishedContent Model => RouteData
                     .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;

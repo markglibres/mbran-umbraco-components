@@ -10,7 +10,7 @@ namespace MBran.Components.Extensions
     {
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             RouteValueDictionary routeValues = null)
-            where T: IModulesController
+            where T: IControllerRendering
         {
             return helper.Module<T>(string.Empty, null, routeValues);
         }
@@ -18,7 +18,7 @@ namespace MBran.Components.Extensions
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             object model,
             RouteValueDictionary routeValues = null)
-            where T : IModulesController
+            where T : IControllerRendering
         {
             return helper.Module<T>(string.Empty, model, routeValues);
         }
@@ -26,7 +26,7 @@ namespace MBran.Components.Extensions
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             string viewPath,
             RouteValueDictionary routeValues = null)
-            where T : IModulesController
+            where T : IControllerRendering
         {
             return helper.Module<T>(viewPath, null, routeValues);
         }
@@ -35,14 +35,14 @@ namespace MBran.Components.Extensions
             string viewPath,
             object model,
             RouteValueDictionary routeValues = null)
-            where T : IModulesController
+            where T : IControllerRendering
         {
             var options = routeValues ?? new RouteValueDictionary();
             options.Add(RouteDataConstants.ModelKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
 
             var controller = typeof(T).Name.Replace("Controller", string.Empty);
-            return helper.Action(nameof(ModulesController.Render), controller, routeValues);
+            return helper.Action(nameof(IControllerRendering.Render), controller, routeValues);
         }
         
     }

@@ -1,7 +1,7 @@
-﻿using MBran.Components.Extensions;
+﻿using MBran.Components.Controllers;
+using MBran.Components.Extensions;
 using System;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace MBran.Components.Helpers
 {
@@ -18,7 +18,7 @@ namespace MBran.Components.Helpers
         public Type FindController(string docTypeAlias)
         {
             var docTypeController = docTypeAlias + "Controller";
-            return AppDomain.CurrentDomain.FindImplementations<Controller>()
+            return AppDomain.CurrentDomain.FindImplementations<IControllerRendering>()
                 .Where(model => model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault();
         }

@@ -50,7 +50,7 @@ COMPONENTS
 			=> standard mvc view locations (controller / action name (Render action))
 			=> if standard mvc view is not found, will look into /Views/Components/{DocType or Poco Model}
 			
-	- B. Create your own controller.
+	- B. Create your own controller and implement IControllerRendering
 		- define your own routes or inherit from surfacecontroller
 		- implement PartialViewResult Render() method as the entry point
 		- access passed model through this.RouteData.Values[RouteDataConstants.ModelKey]
@@ -73,7 +73,7 @@ MODULES
 			=> standard mvc view locations (controller / action name (Render action))
 			=> if standard mvc view is not found, will look into /Views/Components/[Controller Name]
 
-- B. Create your own controller.
+- B. Create your own controller and implement IControllerRendering
 	- define your own routes or inherit from surfacecontroller
 	- must define PartialViewResult Render() as the entry point
 	- use default MVC for view locations

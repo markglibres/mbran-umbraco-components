@@ -291,11 +291,11 @@
     <Content Include="Views\Home.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Components\HasMetaHeader.cshtml" />
+    <Content Include="Views\Shared\HasMetaHeader.cshtml" />
     <Content Include="Views\Components\TextAndMediaLeft.cshtml" />
     <Content Include="Views\Components\TextAndMediaRight.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
-    <Content Include="Views\Partials\HasTextAndMedia.cshtml" />
+    <Content Include="Views\Shared\HasTextAndMedia.cshtml" />
     <Content Include="Views\Partials\TextAndMedia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

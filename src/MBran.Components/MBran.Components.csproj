@@ -212,8 +212,7 @@
   <ItemGroup>
     <Compile Include="Constants\RouteDataConstants.cs" />
     <Compile Include="Controllers\ComponentsController.cs" />
-    <Compile Include="Controllers\IComponentsController.cs" />
-    <Compile Include="Controllers\IModulesController.cs" />
+    <Compile Include="Controllers\IControllerRendering.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
