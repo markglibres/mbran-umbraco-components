@@ -1,34 +1,33 @@
 ﻿using MBran.Components.Helpers;
+using Our.Umbraco.Ditto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
+using MBran.Components.Extensions;
 
 namespace MBran.Components.Extensions
 {
     public static class PublishedContentExtensions
     {
-        public static T As<T>(this IPublishedContent content)
-            where T : PublishedContentModel
+        public static T Map<T>(this IPublishedContent content)
+            where T : class
         {
-            var newObject = (T)Activator.CreateInstance(typeof(T), content);
-            return newObject;
+           return content.As<T>();
         }
 
-        public static object As(this IPublishedContent content, Type type)
+        public static object Map(this IPublishedContent content, Type type)
         {
-            var newObject = Activator.CreateInstance(type, content);
-            return newObject;
+            return content.As(type);
         }
 
-        public static IEnumerable<T> ConvertTo<T>(this IEnumerable<IPublishedContent> content)
-            where T : PublishedContentModel
+        public static IEnumerable<T> MapEnumerable<T>(this IEnumerable<IPublishedContent> content)
+            where T : class
         {
             if (content != null)
             {
                 return content
-                    .Select(c => c.As<T>())
+                    .Select(c => c.Map<T>())
                     .Where(c => c != null);
             }
             return new List<T>();
@@ -37,7 +36,7 @@ namespace MBran.Components.Extensions
         public static Type StronglyTyped(this IPublishedContent content)
         {
             var docTypeAlias = content.GetDocumentTypeAlias();
-            return ModelsHelper.Instance.StronglyTyped(docTypeAlias);
+            return ModelsHelper.Instance.StronglyTypedPublishedContent(docTypeAlias);
         }
 
         public static string GetDocumentTypeAlias(this IPublishedContent content)

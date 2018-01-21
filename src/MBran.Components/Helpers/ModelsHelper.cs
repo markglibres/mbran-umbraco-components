@@ -15,11 +15,17 @@ namespace MBran.Components.Helpers
 
         }
 
-        public Type StronglyTyped(string docTypeAlias)
+        public Type StronglyTypedPublishedContent(string docTypeAlias)
         {
             return AppDomain.CurrentDomain.FindImplementations<PublishedContentModel>()
                 .Where(model => model.Name.Equals(docTypeAlias, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault();
+        }
+
+        public Type StronglyTypedPoco(string modelType)
+        {
+            return !string.IsNullOrWhiteSpace(modelType) ? AppDomain.CurrentDomain.FindImplementation(modelType) 
+                : null;
         }
     }
 }

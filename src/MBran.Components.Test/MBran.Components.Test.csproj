@@ -296,6 +296,7 @@
     <Content Include="Views\Components\TextAndMediaRight.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Partials\HasTextAndMedia.cshtml" />
+    <Content Include="Views\Partials\TextAndMedia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -342,6 +343,7 @@
     <Compile Include="App_Data\Models\TextAndMediaLeft.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaRight.generated.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Pocos\TextAndMedia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

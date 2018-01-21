@@ -16,5 +16,14 @@ namespace MBran.Components.Extensions
                 .Where(type => findType.IsAssignableFrom(type));
         }
 
+        public static Type FindImplementation(this AppDomain domain, string objectFullName)
+        {
+            return domain.GetAssemblies()
+                .Where(assembly => !assembly.GlobalAssemblyCache)
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => type.FullName.Equals(objectFullName,StringComparison.InvariantCultureIgnoreCase))
+                .FirstOrDefault();
+        }
+
     }
 }

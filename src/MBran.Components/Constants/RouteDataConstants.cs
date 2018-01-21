@@ -7,5 +7,6 @@
         public static string ComponentTypeKey = "componentType";
         public static string ControllerKey = "controller";
         public static string ActionKey = "action";
+        public static string ModelType = "modelType";
     }
 }

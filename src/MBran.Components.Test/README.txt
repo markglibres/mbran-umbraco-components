@@ -2,53 +2,53 @@
 COMPONENTS
 =======================
 - standard practice should be using compositions for doc types
-- a single doctype for rendering
+- a simple component rendering
 - View Rendering
-	- @(Html.Component<{DocType}>(routeValues = null))
-	- look for Views/Components/{DocType}.cshtml
-	- map current page to {DocType}
-	- view model is of type {DocType}
+	- @(Html.Component<{DocType or Poco Model}>(routeValues = null))
+	- look for Views/Components/{DocType or Poco Model}.cshtml
+	- map current page to {DocType or Poco Model}
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
-	- @(Html.Component<{DocType}>(model, routeValues = null))
-	- look for Views/Components/{DocType}.cshtml
-	- map object model to {DocType}
-	- view model is of type {DocType}
+	- @(Html.Component<{DocType or Poco Model}>(model, routeValues = null))
+	- look for Views/Components/{DocType or Poco Model}.cshtml
+	- map object model to {DocType or Poco Model}
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
-	- @(Html.Component<{DocType}>(viewPath, routeValues = null))
+	- @(Html.Component<{DocType or Poco Model}>(viewPath, routeValues = null))
 	- look for views in [viewPath]
-	- map current page to {DocType}
-	- view model is of type {DocType}
+	- map current page to {DocType or Poco Model}
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
-	- @(Html.Component<{DocType}>(viewPath, model, routeValues = null))
+	- @(Html.Component<{DocType or Poco Model}>(viewPath, model, routeValues = null))
 	- look for views in [viewPath]
-	- map object model to {DocType}
-	- view model is of type {DocType}
+	- map object model to {DocType or Poco Model}
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
 	- @(Html.Component(model, routeValues = null))
-	- look for Views/Components/{DocType}.cshtml
-	- view model is of type {DocType}
+	- look for Views/Components/{DocType or Poco Model}.cshtml
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
 	- @(Html.Component(nodeId, routeValues = null))
-	- look for Views/Components/{DocType}.cshtml
-	- view model is of type {DocType}
+	- look for Views/Components/{DocType or Poco Model}.cshtml
+	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
 - Controller Rendering
 	- 2 options to create controller
 	- A. Inherit from ComponentsController (inherits from SurfaceController)
 		- access current model through property "Model" (model passed from view or currentpage)
-		- can override GetViewModel() method. By default convert "Model" to a stronglyTyped model based on doctype
+		- can override GetViewModel() method. By default convert "Model" to a stronglyTyped model based on component
 		- can override Render() method if you want to override viewPath location and model. this as the entry point of controller
 		- access viewPath through property "ViewPath" (view path location passed from template)
 		- view locations:
 			=> custom view path if specified
 			=> standard mvc view locations (controller / action name (Render action))
-			=> if standard mvc view is not found, will look into /Views/Components/[DocType]
+			=> if standard mvc view is not found, will look into /Views/Components/{DocType or Poco Model}
 			
 	- B. Create your own controller.
 		- define your own routes or inherit from surfacecontroller
@@ -138,6 +138,14 @@ Home
 		- Text And Media Left
 		- Text And Media Right
 =======================
+POCO Model
+=======================
+TextAndMedia
+	- Title
+	- Summary
+	- Image
+	
+=======================
 TEMPLATES
 =======================
 
@@ -151,7 +159,7 @@ Home (~/Views/Home.cshtml)
 TextAndMediaLeft (~/Views/Components/TextAndMediaLeft.cshtml)
 	@model TextAndMediaLeft
 	<div class="text-media-left">
-		@(Html.Component<HasTextAndMedia>(Model))
+		@(Html.Component<TextAndMedia>(Model))
 	</div>
 
 TextAndMediaRight (~/Views/Components/TextAndMediaRight.cshtml)
@@ -163,6 +171,12 @@ TextAndMediaRight (~/Views/Components/TextAndMediaRight.cshtml)
 HasTextAndMedia (~/Views/Shared/HasTextAndMedia.cshtml)
 	@model TextAndMediaRight
 	@model HasTextAndMedia
+	<h3>@Model.TextMediaTitle</h3>
+	<div class="description">@Model.TextMediaSummary</div>
+	<img src="@Model.TextMediaImage.Url" />
+	
+TextAndMedia (~/Views/Shared/TextAndMedia.cshtml)
+	@model TextAndMedia
 	<h3>@Model.TextMediaTitle</h3>
 	<div class="description">@Model.TextMediaSummary</div>
 	<img src="@Model.TextMediaImage.Url" />

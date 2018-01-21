@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 
 namespace MBran.Components.Extensions
@@ -14,36 +13,31 @@ namespace MBran.Components.Extensions
     {
         public static MvcHtmlString Component<T>(this HtmlHelper helper,
             RouteValueDictionary routeValues = null)
-            where T: PublishedContentModel, IPublishedContent
+            where T: class
         {
             return helper.Component<T>(string.Empty, null, routeValues);
         }
 
         public static MvcHtmlString Component<T>(this HtmlHelper helper, object model,
             RouteValueDictionary routeValues = null)
-            where T : PublishedContentModel, IPublishedContent
+            where T : class
         {
             return helper.Component<T>(string.Empty, model, routeValues);
         }
 
         public static MvcHtmlString Component<T>(this HtmlHelper helper, string viewPath,
             RouteValueDictionary routeValues = null)
-            where T : PublishedContentModel, IPublishedContent
+            where T : class
         {
             return helper.Component<T>(viewPath, null, routeValues);
         }
 
         public static MvcHtmlString Component<T>(this HtmlHelper helper, string viewPath, object model,
             RouteValueDictionary routeValues = null)
-            where T : PublishedContentModel, IPublishedContent
+            where T : class
         {
-            return helper.Component(typeof(T).Name, viewPath, model, routeValues);
-        }
-
-        public static MvcHtmlString Component(this HtmlHelper helper, IPublishedContent model,
-            RouteValueDictionary routeValues = null)
-        {
-            return helper.Component(model.GetDocumentTypeAlias(), string.Empty, model, routeValues);
+            return helper.Component(typeof(T).Name, viewPath, model, routeValues,
+                typeof(T).FullName);
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
@@ -59,9 +53,17 @@ namespace MBran.Components.Extensions
 
         }
 
+        public static MvcHtmlString Component(this HtmlHelper helper, IPublishedContent model,
+            RouteValueDictionary routeValues = null)
+        {
+            return helper.Component(model.GetDocumentTypeAlias(), string.Empty, model, routeValues, 
+                model.GetType().FullName);
+        }
+
         private static MvcHtmlString Component(this HtmlHelper helper, string componentName,
             string viewPath, object model,
-            RouteValueDictionary routeValues = null)
+            RouteValueDictionary routeValues = null,
+            string componentFullname = null)
         {
 
             var controllerName = componentName;
@@ -75,6 +77,7 @@ namespace MBran.Components.Extensions
             options.Add(RouteDataConstants.ComponentTypeKey, componentName);
             options.Add(RouteDataConstants.ModelKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
+            options.Add(RouteDataConstants.ModelType, componentFullname);
 
             return helper.Action(nameof(ComponentsController.Render), controllerName, options);
         }

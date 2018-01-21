@@ -1,6 +1,7 @@
 ﻿using MBran.Components.Constants;
 using MBran.Components.Extensions;
 using MBran.Components.Helpers;
+using System;
 using System.Web.Mvc;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
@@ -44,7 +45,18 @@ namespace MBran.Components.Controllers
 
         protected virtual object GetViewModel()
         {
-            return Model.As(ModelsHelper.Instance.StronglyTyped(ComponentName));
+            var modelType =
+                ModelsHelper.Instance.StronglyTypedPoco(
+                    this.ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString())
+                    ?? ModelsHelper.Instance.StronglyTypedPublishedContent(ComponentName);
+
+            if (modelType == null)
+            {
+                throw new Exception($"Cannot find component {ComponentName}");
+            }
+
+            return Model.Map(modelType);
+                
         }
 
     }
