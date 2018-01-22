@@ -29,13 +29,13 @@
 		- Page (Doc type)
 			- compositions over inheritance
 			- consists of reusable components
-			- auto mapping of current page to component model
-			- auto routing of view paths
 		- Components
 			- with own model
 			- can have own logic
 			- with own template
 			- independent from page
+			- auto routing of view paths
+			- auto mapping of current page to component model (ModelsBuilder or any POCO)
 		- Document Types
 			- Composition 
 				- starts with "_Has" 
@@ -64,4 +64,32 @@
 			- custom logic with own views
 			- complex logic, i.e. one or more features involved
 			
+	- Examples:
+	
+	- Home
+		- _HasMetaHeader 
+			 - @(Html.Component<HasMetaHeader>())
+				- View Rendering
+					- Auto-map CurrentPage to HasMetaHeader model
+					- pass generated model to "HasMetaHeader.cshtml".
+						- will first try to look for the default MVC view routes
+						- if not found, will look into ~/Views/Components/HasMetaHeader.cshtml
+				- Controller Rendering 
+					- Auto-map CurrentPage to HasMetaHeader model
+					- If HasMetaHeaderController class (inherit from ComponentsController) exists
+					- model generation can be overwritten by overriding "GetModel()" class and returns an object
+					- model generated can be access through the property "Model".
+					- has all features of SurfaceControllers (i.e. CurrentPage, etc)
+					- override "Render()" to have control on rendering partial view and model object.
+					
+		- _HasComponents
+			- TextAndMediaLeft
+			- TextAndMediaRight
+			- Loop through the nested content and render component:
+				@inherits UmbracoViewPage<Home>
+				@foreach (var component in Model.Components)
+				{
+					@Html.Component(component)
+				}
+				
 		
