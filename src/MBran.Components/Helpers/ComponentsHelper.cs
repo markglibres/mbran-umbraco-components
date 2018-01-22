@@ -2,6 +2,7 @@
 using System.Linq;
 using MBran.Components.Controllers;
 using MBran.Components.Extensions;
+using Umbraco.Core;
 
 namespace MBran.Components.Helpers
 {
@@ -16,7 +17,14 @@ namespace MBran.Components.Helpers
 
         public Type FindController(string docTypeAlias)
         {
-            var docTypeController = docTypeAlias + "Controller";
+            return (Type)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
+                string.Join("_", new[] { this.GetType().FullName+ ".FindController", docTypeAlias }),
+                () => GetController(docTypeAlias));
+        }
+
+        protected Type GetController(string docTypeAlias)
+        {
+             var docTypeController = docTypeAlias + "Controller";
             return AppDomain.CurrentDomain
                 .FindImplementations<IControllerRendering>()
                 .FirstOrDefault(model => model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase));
