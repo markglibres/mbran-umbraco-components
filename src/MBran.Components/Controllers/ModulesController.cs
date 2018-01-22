@@ -30,11 +30,10 @@ namespace MBran.Components.Controllers
                 viewName = nameof(this.Render);
             }
 
-            if (!this.PartialViewExists(viewName))
-            {
-                this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ModuleName;
-                viewName = ModuleName;
-            }
+            if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
+
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ModuleName;
+            viewName = ModuleName;
 
             return base.PartialView(viewName, model);
 

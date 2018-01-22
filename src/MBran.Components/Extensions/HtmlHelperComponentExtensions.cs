@@ -45,12 +45,7 @@ namespace MBran.Components.Extensions
         {
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
             var content = umbracoHelper.TypedContent(nodeId);
-            if(content == null)
-            {
-                return new MvcHtmlString(string.Empty);
-            }
-            return helper.Component(content, routeValues);
-
+            return content == null ? new MvcHtmlString(string.Empty) : helper.Component(content, routeValues);
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper, IPublishedContent model,

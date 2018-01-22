@@ -32,14 +32,13 @@ namespace MBran.Components.Controllers
                 viewName = nameof(this.Render);
             }
 
-            if (!this.PartialViewExists(viewName))
-            {
-                this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
-                this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ComponentName;
-                viewName = ComponentName;
-            }
+            if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
 
-           return base.PartialView(viewName, model);
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ComponentName;
+            viewName = ComponentName;
+
+            return base.PartialView(viewName, model);
             
         }
 

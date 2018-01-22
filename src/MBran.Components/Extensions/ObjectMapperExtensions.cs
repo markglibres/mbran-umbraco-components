@@ -21,7 +21,7 @@ namespace MBran.Components.Extensions
             {
                 destination.GetType().GetProperty(property.Name,
                     BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public)
-                    .SetValue(destination, property.GetValue(source));
+                    ?.SetValue(destination, property.GetValue(source));
             }
                 
             return destination;
