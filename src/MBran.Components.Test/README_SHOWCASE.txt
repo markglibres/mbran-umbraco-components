@@ -1,0 +1,67 @@
+=====================
+- Umbraco workflow
+	- Doc Type (page)
+		- inheritance
+		- compositions
+	- Template (view)
+		- render multiple partial views 
+			- extensions or helpers for logic in views
+			- logic within views
+			- constant variables for view path
+			- model mapping to viewmodels
+	- Controllers 
+		- custom controllers to handle logic for the page rendered
+	- Problems:
+		- cluttering, too many helpers, and extensions 
+		- constants everywhere
+		- no conventions
+		
+- Goal:
+	- conventions on partial paths using default MVC logic
+	- less constant variables esp for view paths
+	- easy to debug
+	- portable components (can be packaged)
+	- quick way to add new components
+	- minimize redundant code on mapping page to a view model 
+			
+- MBran Components
+	- Concept:
+		- Page (Doc type)
+			- compositions over inheritance
+			- consists of reusable components
+			- auto mapping of current page to component model
+			- auto routing of view paths
+		- Components
+			- with own model
+			- can have own logic
+			- with own template
+			- independent from page
+		- Document Types
+			- Composition 
+				- starts with "_Has" 
+				- i.e. _HasTextAndMedia, _HasMetaHeader
+			- Component 
+				- reusable
+				- one single feature
+				- i.e. TextAndMediaLeft, TextAndMediaRight
+			- Page
+				- can have multiple components
+				- has multiple compositions
+				- i.e. Home
+					- components (nested content)
+						- TextAndMediaLeft
+						- TextAndMediaRight
+					- _HasTextAndMedia
+					- _HasMetaHeader
+						
+	- Implementation:
+		- View Rendering
+			- Render part of a page as a component model directly to a view
+		- Controller Rendering
+			- a view rendering
+			- with custom logic on controller
+		- Module Rendering
+			- custom logic with own views
+			- complex logic, i.e. one or more features involved
+			
+		
