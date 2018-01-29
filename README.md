@@ -9,6 +9,8 @@ MBran Components for Umbraco
 @(Html.Component<MetaTagHeader>("~/Views/Components/Meta.cshtml", Model,"routeData == null"))
 @(Html.Component(Model,"routeData == null"))
 @(Html.Component(nodeId,"routeData == null"))
+@(Html.Component(componentType, Model,"routeData == null" ))
+@(Html.Component(componentType, ~/Views/Components/Meta.cshtml", Model, "routeData == null" ))
 
 @(Html.Module<EventsController>("routeData == null"))
 @(Html.Module<EventsController>(Model,"routeData == null"))

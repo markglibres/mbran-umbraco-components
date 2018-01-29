@@ -298,6 +298,7 @@
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Shared\HasTextAndMedia.cshtml" />
     <Content Include="Views\Partials\TextAndMedia.cshtml" />
+    <Content Include="Views\Shared\ComponentsPicker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -333,6 +334,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\ComponentsPicker.generated.cs" />
     <Compile Include="App_Data\Models\File.generated.cs" />
     <Compile Include="App_Data\Models\Folder.generated.cs" />
     <Compile Include="App_Data\Models\HasComponents.generated.cs" />
@@ -352,6 +354,10 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MBran.Components.Picker\MBran.Components.Picker.csproj">
+      <Project>{f0f086ab-a6ca-45ea-833b-d9a102751047}</Project>
+      <Name>MBran.Components.Picker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MBran.Components\MBran.Components.csproj">
       <Project>{5fd3b7fe-34b6-4822-905b-7463be9aeef1}</Project>
       <Name>MBran.Components</Name>
@@ -394,6 +400,9 @@
   </Target>
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <Import Project="..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets" Condition="Exists('..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components.Picker\App_Plugins $(ProjectDir)App_Plugins</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

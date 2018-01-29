@@ -1,0 +1,13 @@
+﻿<div ng-controller="MBran.Components.DocTypes">
+    <ul class="unstyled">
+        <li ng-repeat="docType in docTypes">
+            <label class="checkbox">
+                <input type="checkbox" value="{{docType.Value}}" 
+                       ng-checked="isAllowedDocType(docType.Value)" 
+                       ng-click="toggleSelect(docType.Value)"/> {{docType.Name}}
+            </label>
+        </li>
+    </ul>
+    <input type="hidden" ng-model="model.value" name="allowedDocTypes" />
+</div>
+

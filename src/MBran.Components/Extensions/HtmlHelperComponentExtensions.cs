@@ -1,6 +1,7 @@
 ﻿using MBran.Components.Constants;
 using MBran.Components.Controllers;
 using MBran.Components.Helpers;
+using System;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -36,11 +37,25 @@ namespace MBran.Components.Extensions
             RouteValueDictionary routeValues = null)
             where T : class
         {
-            return helper.Component(typeof(T).Name, viewPath, model, routeValues,
-                typeof(T).AssemblyQualifiedName);
+            return helper.Component(typeof(T), viewPath, model,  routeValues);
         }
 
-        public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
+        public static MvcHtmlString Component(this HtmlHelper helper,
+            Type componentType, object model, 
+            RouteValueDictionary routeValues = null)
+        {
+            return helper.Component(componentType, string.Empty, model, routeValues);
+        }
+
+        public static MvcHtmlString Component(this HtmlHelper helper,
+            Type componentType, string viewPath, object model, 
+            RouteValueDictionary routeValues = null)
+        {
+            return helper.Component(componentType.Name, viewPath, model, routeValues,
+                componentType.AssemblyQualifiedName);
+        }
+
+            public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
             RouteValueDictionary routeValues = null)
         {
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);

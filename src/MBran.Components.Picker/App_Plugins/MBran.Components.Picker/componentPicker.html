@@ -1,0 +1,34 @@
+﻿<div ng-controller="MBran.Components.PickerController">
+    <div>
+        <div class="umb-property" 
+             ui-sortable="sortableOptions" 
+             ng-model="model.value.sources">
+            <div ng-repeat="item in model.value.sources">
+                <umb-node-preview icon="item.icon"
+                                  name="item.name"
+                                  sortable="true"
+                                  allow-remove="true"
+                                  on-remove="remove($index)">
+                </umb-node-preview>
+            </div>
+        </div>
+        <div class="umb-property">
+            <a class="umb-node-preview-add" 
+               href="#" 
+               ng-click="selectPages()" 
+               prevent-default>
+                Add
+            </a>
+            <hr />
+        </div>
+        <div class="umb-el-wrap umb-property">
+            <label class="control-label ng-binding">Render as</label>
+            <div class="controls umb-property-editor">
+                <select class="umb-editor umb-textstring textstring ng-pristine ng-valid ng-valid-required" 
+                        ng-options="option.name for option in targetDocTypes track by option.value"
+                        ng-model="model.value.component">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

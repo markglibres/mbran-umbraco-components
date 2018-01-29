@@ -27,5 +27,11 @@ namespace MBran.Components.Helpers
             return !string.IsNullOrWhiteSpace(modelTypeFullName) ? AppDomain.CurrentDomain.FindImplementation(modelTypeFullName) 
                 : null;
         }
+
+        public Type StronglyTypedPocoByName(string typeName)
+        {
+            return !string.IsNullOrWhiteSpace(typeName) ? AppDomain.CurrentDomain.FindImplementations(typeName).FirstOrDefault()
+                : null;
+        }
     }
 }

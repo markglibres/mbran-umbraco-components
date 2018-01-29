@@ -1,0 +1,40 @@
+﻿<div class="umb-panel" ng-controller="MBran.Components.LinkPickerController">
+    <div class="umb-panel-body no-header with-footer compact">
+        <umb-tree-search-box hide-search-callback="hideSearch"
+                             search-callback="onSearchResults"
+                             search-from-id="{{searchInfo.searchFromId}}"
+                             search-from-name="{{searchInfo.searchFromName}}"
+                             show-search="{{searchInfo.showSearch}}"
+                             section="{{section}}">
+        </umb-tree-search-box>
+
+        <umb-tree-search-results ng-if="searchInfo.showSearch"
+                                 results="searchInfo.results"
+                                 select-result-callback="selectResult">
+        </umb-tree-search-results>
+
+        <div ng-hide="searchInfo.showSearch">
+            <umb-tree section="content"
+                      hideheader="true"
+                      hideoptions="true"
+                      eventhandler="dialogTreeEventHandler"
+                      isdialog="true"
+                      enablecheckboxes="true">
+            </umb-tree>
+        </div>
+
+        <div class="umb-panel-footer">
+            <div class="umb-el-wrap umb-panel-buttons">
+                <div class="btn-toolbar umb-btn-toolbar pull-right">
+                    <a href ng-click="close()" class="btn btn-link">
+                        <localize key="general_cancel">Cancel</localize>
+                    </a>
+
+                    <button class="btn btn-primary" ng-click="submit(target)">
+                        <localize key="buttons_select">Select</localize>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

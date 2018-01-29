@@ -22,6 +22,13 @@ namespace MBran.Components.Extensions
                 () => GetImplementation(domain, objectFullName));
         }
 
+        public static IEnumerable<Type> FindImplementations(this AppDomain domain, string typeName)
+        {
+            return (IEnumerable<Type>)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
+                string.Join("_", new[] { "MBran.Components.Extensions.AssemblyExtensions.FindImplementations.TypeName", typeName }),
+                () => GetImplementationByName(domain, typeName));
+        }
+
         internal static IEnumerable<Type> GetImplementations(AppDomain domain, Type findType)
         {
             return domain.GetAssemblies()
@@ -39,6 +46,16 @@ namespace MBran.Components.Extensions
                 .FirstOrDefault(type =>
                     type.FullName.Equals(objectFullName, StringComparison.InvariantCultureIgnoreCase)
                     || type.AssemblyQualifiedName.Equals(objectFullName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        internal static IEnumerable<Type> GetImplementationByName(AppDomain domain, string name)
+        {
+            return domain
+                .GetAssemblies()
+                .Where(assembly => !assembly.GlobalAssemblyCache)
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type =>
+                    type.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
     }

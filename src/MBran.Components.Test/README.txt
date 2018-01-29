@@ -38,6 +38,17 @@ COMPONENTS
 	- view model is of type {DocType or Poco Model}
 	- optional params: RouteValueDictionary
 	
+	- @(Html.Component(componentType, Model,"routeData == null" ))
+	- look for Views/Components/{componentType}.cshtml
+	- view model is of type {componentType}
+	- optional params: RouteValueDictionary
+	
+	- @(Html.Component(componentType, viewPath, Model, "routeData == null" ))
+	- look for views in [viewPath]
+	- look for Views/Components/{componentType}.cshtml
+	- view model is of type {componentType}
+	- optional params: RouteValueDictionary
+	
 - Controller Rendering
 	- 2 options to create controller
 	- A. Inherit from ComponentsController (inherits from SurfaceController)
