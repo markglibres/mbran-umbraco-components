@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
-using System.Linq;
-using System;
-using System.Web.Http;
 
 namespace MBran.Components.Picker
 {
@@ -13,16 +13,16 @@ namespace MBran.Components.Picker
         public IEnumerable<DocTypeModel> GetAll()
         {
             var docTypes = Services.ContentTypeService.GetAllContentTypes();
-            return docTypes.Select(docType => new DocTypeModel {
+            return docTypes.Select(docType => new DocTypeModel
+            {
                 Id = docType.Id,
                 Name = docType.Name,
                 Value = docType.Alias
             });
-            
         }
 
         [HttpPost]
-        public IEnumerable<DocTypeModel> GetDefinition([FromBody]string value)
+        public IEnumerable<DocTypeModel> GetDefinition([FromBody] string value)
         {
             var docTypes = Services.ContentTypeService.GetAllContentTypes();
             var docTypeAliases = value?.Split(',') ?? new string[0];

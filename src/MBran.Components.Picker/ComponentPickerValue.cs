@@ -7,6 +7,6 @@ namespace MBran.Components.Picker
     public class ComponentPickerValue
     {
         public IEnumerable<IPublishedContent> Sources { get; set; }
-        public Type TargetDocType { get; set; }
+        public Type ComponentType { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿using MBran.Components.Controllers;
+﻿using MBran.Components.Attributes;
+using MBran.Components.Controllers;
 
 namespace MBran.Components.Test.Controllers
 {
+    [ModuleName("Test")]
     public class TestController : ModulesController
     {
         protected override object GetViewModel()
