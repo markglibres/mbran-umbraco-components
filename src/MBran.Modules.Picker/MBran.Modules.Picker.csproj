@@ -278,6 +278,8 @@
     <Content Include="App_Plugins\MBran.Modules.Picker\modulePicker.html" />
     <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.controller.js" />
     <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\moduleListing.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\moduleListing.html" />
     <Content Include="App_Plugins\MBran.Modules.Picker\Resource\modulePicker.resource.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

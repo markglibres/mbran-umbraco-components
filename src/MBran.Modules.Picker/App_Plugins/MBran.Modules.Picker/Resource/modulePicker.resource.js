@@ -2,14 +2,16 @@
     function ($q, $http) {
         return {
             getDocTypes: function () {
-                return $http.get('/umbraco/BackOffice/DocType/DocTypeApi/GetAll');
+                return $http.get('/umbraco/BackOffice/MBranComponents/DocTypeApi/GetAll');
             },
-            getDocTypesDefinition: function (aliases) {
-
+            getModules: function () {
+                return $http.get('/umbraco/BackOffice/MBranModules/ModulesApi/GetAll');
+            },
+            getModulesDefinition: function (moduleTypes) {
                 return $http({
                     method: 'POST',
-                    url: '/umbraco/BackOffice/DocType/DocTypeApi/GetDefinition',
-                    data: JSON.stringify(aliases)
+                    url: '/umbraco/BackOffice/MBranModules/ModulesApi/GetDefinition',
+                    data: JSON.stringify(moduleTypes)
                 });
             }
         }

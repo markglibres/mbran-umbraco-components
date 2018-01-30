@@ -7,7 +7,7 @@ using Umbraco.Web.Mvc;
 
 namespace MBran.Components.Api
 {
-    [PluginController("DocType")]
+    [PluginController("MBranComponents")]
     public class DocTypeApiController : UmbracoAuthorizedJsonController
     {
         public IEnumerable<DocTypeModel> GetAll()

@@ -1,5 +1,5 @@
 ﻿angular.module('umbraco')
-    .controller('MBran.Modules.PickerController', function ($scope, dialogService, angularHelper) {
+    .controller('MBran.Modules.PickerController', function ($scope, dialogService, angularHelper, modulePickerResource) {
         if (!$scope.model.value) {
             $scope.model.value = {};
         }
@@ -18,7 +18,16 @@
             }
         }
 
-        $scope.init = function() {};
+        $scope.init = function() {
+            modulePickerResource.getModulesDefinition($scope.model.config.selectedModules).then(function (response) {
+                $scope.moduleListing = [];
+                angular.forEach(response.data, function (item) {
+                    $scope.moduleListing.push({ name: item.Name, value: item.Value });
+                });
+
+            });
+
+        };
 
         $scope.selectPages = function () {
             dialogService.contentPicker({
