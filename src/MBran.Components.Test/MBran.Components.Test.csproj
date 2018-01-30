@@ -337,11 +337,13 @@
     <Compile Include="App_Data\Models\ComponentsPicker.generated.cs" />
     <Compile Include="App_Data\Models\File.generated.cs" />
     <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\GenericPage.generated.cs" />
     <Compile Include="App_Data\Models\HasComponents.generated.cs" />
     <Compile Include="App_Data\Models\HasMetaHeader.generated.cs" />
     <Compile Include="App_Data\Models\HasTextAndMedia.generated.cs" />
     <Compile Include="App_Data\Models\Home.generated.cs" />
     <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\Library.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaLeft.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaRight.generated.cs" />
