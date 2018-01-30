@@ -208,8 +208,6 @@
   <ItemGroup>
     <Compile Include="ComponentPickerValue.cs" />
     <Compile Include="ComponentPickerValueConverter.cs" />
-    <Compile Include="DocTypeApiController.cs" />
-    <Compile Include="DocTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

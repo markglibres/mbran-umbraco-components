@@ -1,0 +1,26 @@
+{
+	propertyEditors: [
+		{
+			alias: 'MBran.Modules.Picker',
+			name: 'Module Picker',
+			editor: {
+				view: '~/App_Plugins/MBran.Modules.Picker/modulePicker.html'
+			},
+			prevalues: {
+				fields: [
+					{
+						label: 'Allowed Document Types',
+						description: 'The document types allowed to be set as source for the module',
+						key: 'allowedDocTypes',
+						view: '~/App_Plugins/MBran.Modules.Picker/Prevalues/allowedDocTypes.html'
+					}
+				]
+			}
+		}
+	],
+	javascript: [
+		'~/App_Plugins/MBran.Modules.Picker/modulePicker.controller.js',
+		'~/App_Plugins/MBran.Modules.Picker/Prevalues/allowedDocTypes.controller.js',
+		'~/App_Plugins/MBran.Modules.Picker/Resource/modulePicker.resource.js',
+	]
+}

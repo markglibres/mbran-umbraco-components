@@ -345,6 +345,7 @@
     <Compile Include="App_Data\Models\Image.generated.cs" />
     <Compile Include="App_Data\Models\Library.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\ModulePicker.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMedia.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaLeft.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaRight.generated.cs" />
@@ -404,7 +405,8 @@
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <Import Project="..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets" Condition="Exists('..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components.Picker\App_Plugins $(ProjectDir)App_Plugins</PostBuildEvent>
+    <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components.Picker\App_Plugins $(ProjectDir)App_Plugins
+xcopy /s /y $(SolutionDir)src\MBran.Modules.Picker\App_Plugins $(ProjectDir)App_Plugins</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

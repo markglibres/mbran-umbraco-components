@@ -210,6 +210,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DocTypeApiController.cs" />
+    <Compile Include="Api\DocTypeModel.cs" />
     <Compile Include="Attributes\ModuleNameAttribute.cs" />
     <Compile Include="Constants\RouteDataConstants.cs" />
     <Compile Include="Controllers\ComponentsController.cs" />

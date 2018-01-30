@@ -270,7 +270,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App_Plugins\MBran.Modules.Picker\package.manifest" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Plugins\MBran.Modules.Picker\modulePicker.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\modulePicker.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Resource\modulePicker.resource.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
