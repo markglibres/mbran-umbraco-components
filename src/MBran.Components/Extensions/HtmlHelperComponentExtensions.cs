@@ -2,6 +2,8 @@
 using MBran.Components.Controllers;
 using MBran.Components.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -37,25 +39,38 @@ namespace MBran.Components.Extensions
             RouteValueDictionary routeValues = null)
             where T : class
         {
-            return helper.Component(typeof(T), viewPath, model,  routeValues);
+            return helper.Component(typeof(T), viewPath, new List<object> { model },  routeValues);
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper,
-            Type componentType, object model, 
+            Type componentType, object model,
             RouteValueDictionary routeValues = null)
         {
-            return helper.Component(componentType, string.Empty, model, routeValues);
+            return helper.Component(componentType, string.Empty, new List<object> { model }, routeValues);
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper,
-            Type componentType, string viewPath, object model, 
+            Type componentType, IEnumerable<object> models, 
             RouteValueDictionary routeValues = null)
         {
-            return helper.Component(componentType.Name, viewPath, model, routeValues,
-                componentType.AssemblyQualifiedName);
+            return helper.Component(componentType, string.Empty, models, routeValues);
         }
 
-            public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
+        public static MvcHtmlString Component(this HtmlHelper helper,
+            Type componentType, string viewPath, IEnumerable<object> models, 
+            RouteValueDictionary routeValues = null)
+        {
+            return new MvcHtmlString(
+                string.Join(
+                    string.Empty,
+                    models
+                        .Select(model =>
+                            helper.Component(componentType.Name, viewPath, model, routeValues,
+                            componentType.AssemblyQualifiedName)
+                        .ToHtmlString())));
+        }
+
+        public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
             RouteValueDictionary routeValues = null)
         {
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);

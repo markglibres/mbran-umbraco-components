@@ -1,9 +1,4 @@
 ﻿@model ComponentsPicker
-@using MBran.Components.Picker
-@{ 
-    ComponentPickerValue components = Model.ComponentLinks;
-}
-@foreach (var component in components.Sources)
-{
-    @Html.Component(components.ComponentType, component)
-}
+
+
+@Html.Component(Model.ComponentLinks.ComponentType, Model.ComponentLinks.Sources)
