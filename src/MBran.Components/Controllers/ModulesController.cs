@@ -1,12 +1,13 @@
 ﻿using MBran.Components.Constants;
 using MBran.Components.Extensions;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 
 namespace MBran.Components.Controllers
 {
-    public abstract class ModulesController : SurfaceController, IControllerRendering
+    public abstract class ModulesController : SurfaceController, IModuleController, IControllerRendering
     {
         public virtual IPublishedContent Model => RouteData
                     .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
@@ -15,6 +16,9 @@ namespace MBran.Components.Controllers
                     .Values[RouteDataConstants.ViewPathKey] as string;
 
         public virtual string ModuleName => this.GetName();
+
+        public IEnumerable<IPublishedContent> PublishedContentSources => RouteData
+                    .Values[RouteDataConstants.SourcesKey] as IEnumerable<IPublishedContent>;
 
         public virtual PartialViewResult Render()
         {

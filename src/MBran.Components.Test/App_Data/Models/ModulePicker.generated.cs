@@ -46,7 +46,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Sources
+		/// Modules
 		///</summary>
 		[ImplementPropertyType("moduleSources")]
 		public object ModuleSources

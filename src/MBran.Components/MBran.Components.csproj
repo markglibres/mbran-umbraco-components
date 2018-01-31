@@ -210,14 +210,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ModuleModel.cs" />
+    <Compile Include="Models\ModuleDefinition.cs" />
     <Compile Include="Api\ModulesApiController.cs" />
     <Compile Include="Api\DocTypeApiController.cs" />
-    <Compile Include="Api\DocTypeModel.cs" />
+    <Compile Include="Models\DocTypeDefinition.cs" />
     <Compile Include="Attributes\ModuleNameAttribute.cs" />
     <Compile Include="Constants\RouteDataConstants.cs" />
     <Compile Include="Controllers\ComponentsController.cs" />
     <Compile Include="Controllers\IControllerRendering.cs" />
+    <Compile Include="Controllers\IModuleController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Extensions\ViewEngineExtensions.cs" />
     <Compile Include="Helpers\ComponentsHelper.cs" />
     <Compile Include="Helpers\ModelsHelper.cs" />
+    <Compile Include="Helpers\ModulesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

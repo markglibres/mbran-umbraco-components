@@ -1,4 +1,5 @@
 ﻿@model ComponentsPicker
+@using MBran.Components.Picker
 
 
-@Html.Component(Model.ComponentSources.ComponentType, Model.ComponentSources.Sources)
+@Html.RenderComponents(Model.ComponentSources)

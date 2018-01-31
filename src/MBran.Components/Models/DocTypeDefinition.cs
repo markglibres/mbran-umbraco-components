@@ -1,6 +1,6 @@
-﻿namespace MBran.Components.Api
+﻿namespace MBran.Components.Models
 {
-    public class DocTypeModel
+    public class DocTypeDefinition
     {
         public int Id { get; set; }
         public string Name { get; set; }

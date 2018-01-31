@@ -1,6 +1,6 @@
-﻿namespace MBran.Components.Api
+﻿namespace MBran.Components.Models
 {
-    public class ModuleModel
+    public class ModuleDefinition
     {
         public string Name { get; set; }
         public string Value { get; set; }

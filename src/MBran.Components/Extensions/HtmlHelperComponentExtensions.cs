@@ -60,6 +60,11 @@ namespace MBran.Components.Extensions
             Type componentType, string viewPath, IEnumerable<object> models, 
             RouteValueDictionary routeValues = null)
         {
+            if(componentType == null || models == null)
+            {
+                return new MvcHtmlString(string.Empty);
+            }
+
             return new MvcHtmlString(
                 string.Join(
                     string.Empty,

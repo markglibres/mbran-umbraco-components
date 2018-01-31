@@ -1,37 +1,28 @@
-﻿using System;
+﻿using MBran.Components.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 
-namespace MBran.Components.Api
+namespace MBran.Components.Models
 {
     [PluginController("MBranModules")]
     public class ModulesApiController : UmbracoAuthorizedJsonController
     {
-        public IEnumerable<ModuleModel> GetAll()
+        public IEnumerable<ModuleDefinition> GetAll()
         {
-            var modules = Services.ContentTypeService.GetAllContentTypes();
-            return new List<ModuleModel>
-            {
-                new ModuleModel {Name = "Module 1", Value = "this.is.my.type"},
-                new ModuleModel {Name = "Module 2", Value = "this.is.my.type2"},
-                new ModuleModel {Name = "Module 3", Value = "this.is.my.type3"}
-            };
+            return ModulesHelper.Instance.GetAll();
         }
 
         [HttpPost]
-        public IEnumerable<ModuleModel> GetDefinition([FromBody] string value)
+        public IEnumerable<ModuleDefinition> GetDefinition([FromBody] string value)
         {
-            var modules = Services.ContentTypeService.GetAllContentTypes();
-            var moduleNames = value?.Split(',') ?? new string[0];
-            return new List<ModuleModel>
-            {
-                new ModuleModel {Name = "Module 1", Value = "this.is.my.type"},
-                new ModuleModel {Name = "Module 2", Value = "this.is.my.type2"},
-                new ModuleModel {Name = "Module 3", Value = "this.is.my.type3"}
-            };
+            string[] moduleTypes = !string.IsNullOrWhiteSpace(value) ? value.Split(',') : new string[0];
+            return ModulesHelper.Instance.GetAll()
+                .Where(module => moduleTypes.Contains(module.Value,StringComparer.InvariantCultureIgnoreCase));
+            
         }
     }
 }
