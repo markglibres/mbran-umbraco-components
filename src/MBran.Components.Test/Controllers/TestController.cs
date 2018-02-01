@@ -3,7 +3,7 @@ using MBran.Components.Controllers;
 
 namespace MBran.Components.Test.Controllers
 {
-    [ModuleName("Test Module")]
+    [UmbracoModule("Test Module", "this is a test")]
     public class TestController : ModulesController
     {
         protected override object GetViewModel()

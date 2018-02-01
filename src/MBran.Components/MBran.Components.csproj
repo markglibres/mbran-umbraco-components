@@ -214,7 +214,7 @@
     <Compile Include="Api\ModulesApiController.cs" />
     <Compile Include="Api\DocTypeApiController.cs" />
     <Compile Include="Models\DocTypeDefinition.cs" />
-    <Compile Include="Attributes\ModuleNameAttribute.cs" />
+    <Compile Include="Attributes\UmbracoModuleAttribute.cs" />
     <Compile Include="Constants\RouteDataConstants.cs" />
     <Compile Include="Controllers\ComponentsController.cs" />
     <Compile Include="Controllers\IControllerRendering.cs" />

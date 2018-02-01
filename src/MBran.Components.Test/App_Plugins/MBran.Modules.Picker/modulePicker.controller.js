@@ -66,5 +66,9 @@
             return false;
         };
 
+        $scope.onSelectModule = function() {
+            $scope.moduleDescription = 'test';
+        };
+
         $scope.init();
     });
