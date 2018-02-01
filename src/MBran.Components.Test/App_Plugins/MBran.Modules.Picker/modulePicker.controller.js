@@ -22,11 +22,10 @@
             modulePickerResource.getModulesDefinition($scope.model.config.selectedModules).then(function (response) {
                 $scope.moduleListing = [];
                 angular.forEach(response.data, function (item) {
-                    $scope.moduleListing.push({ name: item.Name, value: item.Value });
+                    $scope.moduleListing.push({ name: item.Name, value: item.Value, description: item.Description });
                 });
-
             });
-
+            $scope.updateModuleDescription();
         };
 
         $scope.selectPages = function () {
@@ -66,8 +65,11 @@
             return false;
         };
 
-        $scope.onSelectModule = function() {
-            $scope.moduleDescription = 'test';
+        $scope.updateModuleDescription = function() {
+             if ($scope.model.value.module) {
+                $scope.moduleDescription = $scope.model.value.module.description;
+            }
+
         };
 
         $scope.init();
