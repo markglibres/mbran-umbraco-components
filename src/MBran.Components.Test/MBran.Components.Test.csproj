@@ -299,6 +299,7 @@
     <Content Include="Views\Shared\HasTextAndMedia.cshtml" />
     <Content Include="Views\Partials\TextAndMediaPoco.cshtml" />
     <Content Include="Views\Shared\ComponentsPicker.cshtml" />
+    <Content Include="Views\Shared\ModulePicker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
