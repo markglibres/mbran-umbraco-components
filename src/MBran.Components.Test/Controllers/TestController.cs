@@ -10,5 +10,10 @@ namespace MBran.Components.Test.Controllers
         {
             return this.Model;
         }
+
+        protected override string GetViewPath()
+        {
+            return base.GetViewPath();
+        }
     }
 }

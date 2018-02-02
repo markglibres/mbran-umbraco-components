@@ -14,7 +14,7 @@ namespace MBran.Components.Controllers
                 model : CurrentPage
             : CurrentPage;
 
-        public virtual string ViewPath => RouteData
+        private string ViewPath => RouteData
                     .Values[RouteDataConstants.ViewPathKey] as string;
 
         public virtual string ModuleName => this.GetName();
@@ -24,10 +24,15 @@ namespace MBran.Components.Controllers
 
         public virtual PartialViewResult Render()
         {
-            return PartialView(ViewPath, CreateViewModel());
+            return PartialView(GetViewPath(), CreateViewModel());
         }
 
         protected abstract object CreateViewModel();
+
+        protected virtual string GetViewPath()
+        {
+            return ViewPath;
+        }
 
         protected override PartialViewResult PartialView(string viewName, object model)
         {
