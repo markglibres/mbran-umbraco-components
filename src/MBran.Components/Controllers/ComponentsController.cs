@@ -10,15 +10,8 @@ namespace MBran.Components.Controllers
 {
     public class ComponentsController : SurfaceController, IControllerRendering
     {
-        private IPublishedContent _model => RouteData
-                    .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
-
         private string _componentName => RouteData
                     .Values[RouteDataConstants.ComponentTypeKey] as string;
-
-        private string _viewPath => RouteData
-                    .Values[RouteDataConstants.ViewPathKey] as string 
-            ?? _componentName;
 
         public virtual PartialViewResult Render()
         {
@@ -61,18 +54,21 @@ namespace MBran.Components.Controllers
                 throw new Exception($"Cannot find component {_componentName}");
             }
 
-            return _model.Map(modelType);
+            return GetModel().Map(modelType);
                 
         }
 
         protected virtual string GetViewPath()
         {
-            return _viewPath;
+            return RouteData
+                    .Values[RouteDataConstants.ViewPathKey] as string
+            ?? _componentName;
         }
 
-        protected object GetModel()
+        protected IPublishedContent GetModel()
         {
-            return _model;
+            return RouteData
+                    .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
         }
 
     }

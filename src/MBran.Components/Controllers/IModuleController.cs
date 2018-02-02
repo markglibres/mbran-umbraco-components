@@ -5,6 +5,6 @@ namespace MBran.Components.Controllers
 {
     public interface IModuleController
     {
-        IEnumerable<IPublishedContent> PublishedContentSources { get; }
+        IEnumerable<IPublishedContent> GetPublishedSources();
     }
 }

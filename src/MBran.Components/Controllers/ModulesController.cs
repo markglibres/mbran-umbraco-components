@@ -9,18 +9,7 @@ namespace MBran.Components.Controllers
 {
     public abstract class ModulesController : SurfaceController, IModuleController, IControllerRendering
     {
-        private IPublishedContent _model => (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
-            (model.Id > 0) ?
-                model : CurrentPage
-            : CurrentPage;
-
-        private string _viewPath => RouteData
-                    .Values[RouteDataConstants.ViewPathKey] as string;
-
         private string _moduleName => this.GetName();
-
-        public IEnumerable<IPublishedContent> PublishedContentSources => RouteData
-                    .Values[RouteDataConstants.SourcesKey] as IEnumerable<IPublishedContent>;
 
         public virtual PartialViewResult Render()
         {
@@ -31,14 +20,18 @@ namespace MBran.Components.Controllers
 
         protected virtual string GetViewPath()
         {
-            return _viewPath;
+            return RouteData
+                    .Values[RouteDataConstants.ViewPathKey] as string;
         }
 
-        protected object GetModel()
+        protected IPublishedContent GetModel()
         {
-            return _model;
+            return (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
+            (model.Id > 0) ?
+                model : CurrentPage
+            : CurrentPage;
         }
-
+        
         protected override PartialViewResult PartialView(string viewName, object model)
         {
             if(string.IsNullOrWhiteSpace(viewName))
@@ -54,6 +47,11 @@ namespace MBran.Components.Controllers
             return base.PartialView(viewName, model);
 
         }
-        
+
+        public virtual IEnumerable<IPublishedContent> GetPublishedSources()
+        {
+            return (RouteData.Values[RouteDataConstants.SourcesKey] is IEnumerable<IPublishedContent> sources) ?
+                sources : new List<IPublishedContent>();
+        }
     }
 }
