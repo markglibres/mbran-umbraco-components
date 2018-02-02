@@ -9,8 +9,10 @@ namespace MBran.Components.Controllers
 {
     public abstract class ModulesController : SurfaceController, IModuleController, IControllerRendering
     {
-        public virtual IPublishedContent Model => RouteData
-                    .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
+        public virtual IPublishedContent Model => (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
+            (model.Id > 0) ?
+                model : CurrentPage
+            : CurrentPage;
 
         public virtual string ViewPath => RouteData
                     .Values[RouteDataConstants.ViewPathKey] as string;
