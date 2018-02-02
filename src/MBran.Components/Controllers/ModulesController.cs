@@ -9,15 +9,15 @@ namespace MBran.Components.Controllers
 {
     public abstract class ModulesController : SurfaceController, IModuleController, IControllerRendering
     {
-        public virtual IPublishedContent Model => (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
+        private IPublishedContent _model => (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
             (model.Id > 0) ?
                 model : CurrentPage
             : CurrentPage;
 
-        private string ViewPath => RouteData
+        private string _viewPath => RouteData
                     .Values[RouteDataConstants.ViewPathKey] as string;
 
-        public virtual string ModuleName => this.GetName();
+        private string _moduleName => this.GetName();
 
         public IEnumerable<IPublishedContent> PublishedContentSources => RouteData
                     .Values[RouteDataConstants.SourcesKey] as IEnumerable<IPublishedContent>;
@@ -31,7 +31,12 @@ namespace MBran.Components.Controllers
 
         protected virtual string GetViewPath()
         {
-            return ViewPath;
+            return _viewPath;
+        }
+
+        protected object GetModel()
+        {
+            return _model;
         }
 
         protected override PartialViewResult PartialView(string viewName, object model)
@@ -43,8 +48,8 @@ namespace MBran.Components.Controllers
 
             if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
 
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ModuleName;
-            viewName = ModuleName;
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _moduleName;
+            viewName = _moduleName;
 
             return base.PartialView(viewName, model);
 

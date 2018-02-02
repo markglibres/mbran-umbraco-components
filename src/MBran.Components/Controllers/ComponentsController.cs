@@ -10,19 +10,19 @@ namespace MBran.Components.Controllers
 {
     public class ComponentsController : SurfaceController, IControllerRendering
     {
-        public virtual IPublishedContent Model => RouteData
+        private IPublishedContent _model => RouteData
                     .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
 
-        public virtual string ComponentName => RouteData
+        private string _componentName => RouteData
                     .Values[RouteDataConstants.ComponentTypeKey] as string;
 
-        public virtual string ViewPath => RouteData
+        private string _viewPath => RouteData
                     .Values[RouteDataConstants.ViewPathKey] as string 
-            ?? ComponentName;
+            ?? _componentName;
 
         public virtual PartialViewResult Render()
         {
-            return PartialView(ViewPath, GetViewModel());
+            return PartialView(GetViewPath(), CreateViewModel());
         }
 
         protected override PartialViewResult PartialView(string viewName, object model)
@@ -35,14 +35,14 @@ namespace MBran.Components.Controllers
             if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
 
             this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = ComponentName;
-            viewName = ComponentName;
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _componentName;
+            viewName = _componentName;
 
             return base.PartialView(viewName, model);
             
         }
 
-        protected virtual object GetViewModel()
+        protected virtual object CreateViewModel()
         {
             var modelTypeQualifiedName = this.ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString();
             Type modelType = null;
@@ -53,16 +53,26 @@ namespace MBran.Components.Controllers
 
             if (modelType == null)
             {
-                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(ComponentName);
+                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(_componentName);
             }
             
             if (modelType == null)
             {
-                throw new Exception($"Cannot find component {ComponentName}");
+                throw new Exception($"Cannot find component {_componentName}");
             }
 
-            return Model.Map(modelType);
+            return _model.Map(modelType);
                 
+        }
+
+        protected virtual string GetViewPath()
+        {
+            return _viewPath;
+        }
+
+        protected object GetModel()
+        {
+            return _model;
         }
 
     }

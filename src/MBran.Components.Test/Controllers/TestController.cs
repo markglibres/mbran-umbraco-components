@@ -1,4 +1,5 @@
-﻿using MBran.Components.Attributes;
+﻿using System.Web.Mvc;
+using MBran.Components.Attributes;
 using MBran.Components.Controllers;
 
 namespace MBran.Components.Test.Controllers
@@ -8,12 +9,17 @@ namespace MBran.Components.Test.Controllers
     {
         protected override object CreateViewModel()
         {
-            return this.Model;
+            return base.GetModel();
         }
 
         protected override string GetViewPath()
         {
             return base.GetViewPath();
+        }
+
+        public override PartialViewResult Render()
+        {
+            return base.Render();
         }
     }
 }
