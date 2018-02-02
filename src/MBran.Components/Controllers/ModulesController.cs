@@ -24,10 +24,10 @@ namespace MBran.Components.Controllers
 
         public virtual PartialViewResult Render()
         {
-            return PartialView(ViewPath, GetViewModel());
+            return PartialView(ViewPath, CreateViewModel());
         }
 
-        protected abstract object GetViewModel();
+        protected abstract object CreateViewModel();
 
         protected override PartialViewResult PartialView(string viewName, object model)
         {
