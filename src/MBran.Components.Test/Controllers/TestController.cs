@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using MBran.Components.Attributes;
 using MBran.Components.Controllers;
+using Umbraco.Core.Models;
 
 namespace MBran.Components.Test.Controllers
 {
@@ -20,6 +22,11 @@ namespace MBran.Components.Test.Controllers
         public override PartialViewResult Render()
         {
             return base.Render();
+        }
+
+        public override IEnumerable<IPublishedContent> GetPublishedSources()
+        {
+            return base.GetPublishedSources();
         }
     }
 }

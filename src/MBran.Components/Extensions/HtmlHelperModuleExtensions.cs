@@ -1,9 +1,11 @@
 ﻿using MBran.Components.Constants;
 using MBran.Components.Controllers;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Umbraco.Core.Models;
 
 namespace MBran.Components.Extensions
 {
@@ -16,9 +18,11 @@ namespace MBran.Components.Extensions
             return helper.Module<T>(string.Empty, null, routeValues);
         }
 
-        public static MvcHtmlString Module(this HtmlHelper helper, Type module,
+        public static MvcHtmlString Module(this HtmlHelper helper, Type module, IEnumerable<IPublishedContent> sources,
             RouteValueDictionary routeValues = null)
         {
+            var options = routeValues ?? new RouteValueDictionary();
+            options.Add(RouteDataConstants.SourcesKey, sources);
             return helper.Module(module, string.Empty, null, routeValues);
         }
 
