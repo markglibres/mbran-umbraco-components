@@ -260,6 +260,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModulePickerValue.cs" />
+    <Compile Include="ModulePickerValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -367,6 +367,10 @@
       <Project>{5fd3b7fe-34b6-4822-905b-7463be9aeef1}</Project>
       <Name>MBran.Components</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MBran.Modules.Picker\MBran.Modules.Picker.csproj">
+      <Project>{89d7fae6-5fca-49b8-9a19-da26b3879df3}</Project>
+      <Name>MBran.Modules.Picker</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

@@ -14,7 +14,7 @@
             scroll: true,
             zIndex: 6000,
             update: function () {
-                angularHelper.getCurrentForm($scope).$setDirty()
+                angularHelper.getCurrentForm($scope).$setDirty();
             }
         }
 
@@ -50,7 +50,7 @@
 
         $scope.remove = function (index) {
             $scope.model.value.sources.splice(index, 1);
-            angularHelper.getCurrentForm($scope).$setDirty()
+            angularHelper.getCurrentForm($scope).$setDirty();
         };
 
         function pageSelected(item) {

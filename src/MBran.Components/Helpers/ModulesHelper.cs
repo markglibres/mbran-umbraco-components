@@ -38,5 +38,12 @@ namespace MBran.Components.Helpers
                     };
                 });
         }
+
+        public Type GetModuleType(string typeFullName)
+        {
+            return AppDomain.CurrentDomain
+                .FindImplementations<ModulesController>(typeFullName)
+                .FirstOrDefault();
+        }
     }
 }
