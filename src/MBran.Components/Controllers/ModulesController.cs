@@ -34,11 +34,15 @@ namespace MBran.Components.Controllers
         
         protected override PartialViewResult PartialView(string viewName, object model)
         {
-            if(string.IsNullOrWhiteSpace(viewName))
+            SetExecutingModuleFolder();
+
+            if (string.IsNullOrWhiteSpace(viewName))
             {
+                var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
+                if (this.PartialViewExists(moduleViewPath)) return base.PartialView(moduleViewPath, model);
                 viewName = nameof(this.Render);
             }
-
+            
             if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
 
             this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _moduleName;
@@ -52,6 +56,11 @@ namespace MBran.Components.Controllers
         {
             return (RouteData.Values[RouteDataConstants.SourcesKey] is IEnumerable<IPublishedContent> sources) ?
                 sources : new List<IPublishedContent>();
+        }
+
+        private void SetExecutingModuleFolder()
+        {
+            ViewData[RouteDataConstants.ExecutingModule] = _moduleName;
         }
     }
 }

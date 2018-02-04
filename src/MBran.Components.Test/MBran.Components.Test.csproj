@@ -295,11 +295,15 @@
     <Content Include="Views\Shared\HasMetaHeader.cshtml" />
     <Content Include="Views\Components\TextAndMediaLeft.cshtml" />
     <Content Include="Views\Components\TextAndMediaRight.cshtml" />
-    <Content Include="Views\Test\Test.cshtml" />
+    <Content Include="Views\Modules\Test\Test.cshtml" />
     <Content Include="Views\Shared\HasTextAndMedia.cshtml" />
     <Content Include="Views\Partials\TextAndMediaPoco.cshtml" />
     <Content Include="Views\Shared\ComponentsPicker.cshtml" />
     <Content Include="Views\Shared\ModulePicker.cshtml" />
+    <Content Include="Views\Home\TextAndMediaLeft2.cshtml" />
+    <Content Include="Views\Modules\Test\TextAndMediaLeft.cshtml" />
+    <Content Include="Views\GenericPage.cshtml" />
+    <Content Include="Views\GenericPage\TextAndMediaLeft.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,9 @@
+﻿@inherits UmbracoViewPage<GenericPage>
+
+<div class="page-components">
+    <h2>More about being Aussie</h2>
+    @foreach (var component in Model.Components)
+    {
+        @Html.Component(component)
+    }
+</div>

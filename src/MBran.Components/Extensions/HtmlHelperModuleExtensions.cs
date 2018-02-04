@@ -70,11 +70,11 @@ namespace MBran.Components.Extensions
             object model,
             RouteValueDictionary routeValues = null)
         {
+            var controller = module.Name.Replace("Controller", string.Empty);
+
             var options = routeValues ?? new RouteValueDictionary();
             options.Add(RouteDataConstants.ModelKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
-
-            var controller = module.Name.Replace("Controller", string.Empty);
             return helper.Action(nameof(IControllerRendering.Render), controller, routeValues);
         }
     }

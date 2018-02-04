@@ -9,5 +9,6 @@
         public static string ActionKey = "action";
         public static string ModelType = "modelType";
         public static string SourcesKey = "sources";
+        public static string ExecutingModule = "executingModule";
     }
 }

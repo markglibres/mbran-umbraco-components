@@ -1,0 +1,8 @@
+﻿@model IPublishedContent
+
+<div>This is a controller rendering with doctype: @Model.DocumentTypeAlias = @Model.Id</div>
+
+<div>
+    <h3>this is a custom module view</h3>
+    @(Html.Component<TextAndMediaLeft>(Model))
+</div>

@@ -2,6 +2,8 @@
 using MBran.Components.Extensions;
 using MBran.Components.Helpers;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Web.Mvc;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
@@ -22,6 +24,12 @@ namespace MBran.Components.Controllers
         {
             if (string.IsNullOrWhiteSpace(viewName))
             {
+                var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{_componentName}.cshtml";
+                if (this.PartialViewExists(controllerViewPath)) return base.PartialView(controllerViewPath, model);
+
+                var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{_componentName}.cshtml";
+                if (this.PartialViewExists(moduleViewPath)) return base.PartialView(moduleViewPath, model);
+
                 viewName = nameof(this.Render);
             }
 
@@ -69,6 +77,12 @@ namespace MBran.Components.Controllers
         {
             return RouteData
                     .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
+        }
+
+        protected string GetExecutingModuleFolder()
+        {
+            return RouteData
+                    .Values[RouteDataConstants.ExecutingModule] as string;
         }
 
     }

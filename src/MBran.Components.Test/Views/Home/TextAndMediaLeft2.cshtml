@@ -1,0 +1,7 @@
+﻿@using MBran.Components.Test.Pocos
+@model TextAndMediaLeft
+
+<div class="text-media-left">
+    <h2>This component is overriden at the page level</h2>
+    @(Html.Component<TextAndMediaPoco>(Model))
+</div>

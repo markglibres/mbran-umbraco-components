@@ -108,6 +108,7 @@ namespace MBran.Components.Extensions
             options.Add(RouteDataConstants.ModelKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
             options.Add(RouteDataConstants.ModelType, componentFullname);
+            options.Add(RouteDataConstants.ExecutingModule, helper.ViewData[RouteDataConstants.ExecutingModule]);
 
             return helper.Action(nameof(IControllerRendering.Render), controllerName, options);
         }
