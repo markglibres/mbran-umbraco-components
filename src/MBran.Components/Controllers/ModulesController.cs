@@ -36,20 +36,30 @@ namespace MBran.Components.Controllers
         {
             SetExecutingModuleFolder();
 
-            if (string.IsNullOrWhiteSpace(viewName))
-            {
-                var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
-                if (this.PartialViewExists(moduleViewPath)) return base.PartialView(moduleViewPath, model);
-                viewName = nameof(this.Render);
-            }
-            
-            if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
+            string partialView = GetPartialView(viewName, model);
+
+            if (!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
 
             this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _moduleName;
-            viewName = _moduleName;
+            partialView = _moduleName;
 
-            return base.PartialView(viewName, model);
+            return base.PartialView(partialView, model);
 
+        }
+
+        private string GetPartialView(string viewName, object model)
+        {
+            if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
+
+            var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
+
+            if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
+
+            viewName = nameof(this.Render);
+            if (this.PartialViewExists(viewName)) return viewName;
+
+            return string.Empty;
+            
         }
 
         public virtual IEnumerable<IPublishedContent> GetPublishedSources()

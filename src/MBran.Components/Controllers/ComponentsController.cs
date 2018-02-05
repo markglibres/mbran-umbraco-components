@@ -22,25 +22,32 @@ namespace MBran.Components.Controllers
 
         protected override PartialViewResult PartialView(string viewName, object model)
         {
-            if (string.IsNullOrWhiteSpace(viewName))
-            {
-                var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{_componentName}.cshtml";
-                if (this.PartialViewExists(controllerViewPath)) return base.PartialView(controllerViewPath, model);
+            var partialView = GetPartialView(viewName, model);
 
-                var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{_componentName}.cshtml";
-                if (this.PartialViewExists(moduleViewPath)) return base.PartialView(moduleViewPath, model);
-
-                viewName = nameof(this.Render);
-            }
-
-            if (this.PartialViewExists(viewName)) return base.PartialView(viewName, model);
+            if(!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
 
             this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
             this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _componentName;
-            viewName = _componentName;
+            partialView = _componentName;
 
-            return base.PartialView(viewName, model);
+            return base.PartialView(partialView, model);
             
+        }
+
+        private string GetPartialView(string viewName, object model)
+        {
+            if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
+
+            var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{_componentName}.cshtml";
+            if (this.PartialViewExists(controllerViewPath)) return controllerViewPath;
+
+            var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{_componentName}.cshtml";
+            if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
+
+            viewName = nameof(this.Render);
+            if (this.PartialViewExists(viewName)) return viewName;
+
+            return string.Empty;
         }
 
         protected virtual object CreateViewModel()
