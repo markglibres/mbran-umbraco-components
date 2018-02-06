@@ -10,23 +10,42 @@ namespace MBran.Components.Extensions
         public static IEnumerable<Type> FindImplementations<T>(this AppDomain domain, string typeFullName = "")
             where T : class
         {
-            return (IEnumerable<Type>)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
-                string.Join("_", new[] { "MBran.Components.Extensions.AssemblyExtensions.FindImplementations", typeof(T).FullName}),
-                () => GetImplementations(domain, typeof(T), typeFullName));
+            string cacheName = string.Join("_", new[] {
+                    typeof(AssemblyExtensions).FullName,
+                    nameof(FindImplementations),
+                    typeof(T).FullName});
+
+            return (IEnumerable<Type>)ApplicationContext.Current
+                .ApplicationCache
+                .RuntimeCache
+                .GetCacheItem(cacheName, () => GetImplementations(domain, typeof(T), typeFullName));
         }
         
         public static Type FindImplementation(this AppDomain domain, string objectFullName)
         {
-            return (Type)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
-                string.Join("_", new[] { "MBran.Components.Extensions.AssemblyExtensions.FindImplementation", objectFullName }),
-                () => GetImplementation(domain, objectFullName));
+            string cacheName = string.Join("_", new[] {
+                    typeof(AssemblyExtensions).FullName,
+                    nameof(FindImplementation),
+                    objectFullName});
+
+            return (Type)ApplicationContext.Current
+                .ApplicationCache
+                .RuntimeCache
+                .GetCacheItem(cacheName, () => GetImplementation(domain, objectFullName));
         }
 
         public static IEnumerable<Type> FindImplementations(this AppDomain domain, string typeName)
         {
-            return (IEnumerable<Type>)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
-                string.Join("_", new[] { "MBran.Components.Extensions.AssemblyExtensions.FindImplementations.TypeName", typeName }),
-                () => GetImplementationByName(domain, typeName));
+            string cacheName = string.Join("_", new[] {
+                    typeof(AssemblyExtensions).FullName,
+                    nameof(FindImplementations),
+                    nameof(Type),
+                    typeName});
+
+            return (IEnumerable<Type>)ApplicationContext.Current
+                .ApplicationCache
+                .RuntimeCache
+                .GetCacheItem(cacheName, () => GetImplementationByName(domain, typeName));
         }
 
         internal static IEnumerable<Type> GetImplementations(AppDomain domain, Type findType, string typeFullName = "")

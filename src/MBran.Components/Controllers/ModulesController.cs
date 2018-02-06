@@ -11,7 +11,7 @@ namespace MBran.Components.Controllers
     {
         private string _moduleName => this.GetName();
 
-        public virtual PartialViewResult Render()
+        public PartialViewResult Render()
         {
             return PartialView(GetViewPath(), CreateViewModel());
         }

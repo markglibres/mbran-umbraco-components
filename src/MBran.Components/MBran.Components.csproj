@@ -210,6 +210,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DocTypesHelper.cs" />
     <Compile Include="Models\ModuleDefinition.cs" />
     <Compile Include="Api\ModulesApiController.cs" />
     <Compile Include="Api\DocTypeApiController.cs" />

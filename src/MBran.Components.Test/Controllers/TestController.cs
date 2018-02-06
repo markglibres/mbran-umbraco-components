@@ -18,12 +18,7 @@ namespace MBran.Components.Test.Controllers
         {
             return base.GetViewPath();
         }
-
-        public override PartialViewResult Render()
-        {
-            return base.Render();
-        }
-
+        
         public override IEnumerable<IPublishedContent> GetPublishedSources()
         {
             return base.GetPublishedSources();

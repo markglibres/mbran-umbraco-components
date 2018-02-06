@@ -17,9 +17,15 @@ namespace MBran.Components.Helpers
 
         public Type FindController(string docTypeAlias)
         {
-            return (Type)ApplicationContext.Current.ApplicationCache.RuntimeCache.GetCacheItem(
-                string.Join("_", new[] { this.GetType().FullName+ ".FindController", docTypeAlias }),
-                () => GetController(docTypeAlias));
+            string cacheName = string.Join("_", new[] {
+                this.GetType().FullName,
+                nameof(FindController),
+                docTypeAlias });
+
+            return (Type)ApplicationContext.Current
+                .ApplicationCache
+                .RuntimeCache
+                .GetCacheItem(cacheName, () => GetController(docTypeAlias));
         }
 
         protected Type GetController(string docTypeAlias)

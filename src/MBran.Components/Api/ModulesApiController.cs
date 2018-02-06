@@ -19,9 +19,7 @@ namespace MBran.Components.Models
         [HttpPost]
         public IEnumerable<ModuleDefinition> GetDefinition([FromBody] string value)
         {
-            string[] moduleTypes = !string.IsNullOrWhiteSpace(value) ? value.Split(',') : new string[0];
-            return ModulesHelper.Instance.GetAll()
-                .Where(module => moduleTypes.Contains(module.Value,StringComparer.InvariantCultureIgnoreCase));
+            return ModulesHelper.Instance.GetDefinitions(value?.Split(','));
             
         }
     }

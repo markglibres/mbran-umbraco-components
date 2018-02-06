@@ -5,6 +5,7 @@ using MBran.Components.Attributes;
 using MBran.Components.Controllers;
 using MBran.Components.Extensions;
 using MBran.Components.Models;
+using Umbraco.Core;
 
 namespace MBran.Components.Helpers
 {
@@ -18,6 +19,35 @@ namespace MBran.Components.Helpers
         public static ModulesHelper Instance => _helper.Value;
 
         public IEnumerable<ModuleDefinition> GetAll()
+        {
+            string cacheName = string.Join("_", new[] {
+                this.GetType().FullName,
+                nameof(GetAll),
+                nameof(ModuleDefinition)
+            });
+
+            return (IEnumerable<ModuleDefinition>)ApplicationContext.Current
+                .ApplicationCache
+                .RuntimeCache
+                .GetCacheItem(cacheName, () => GetAllModules());
+        }
+
+        public Type GetModuleType(string typeFullName)
+        {
+            return AppDomain.CurrentDomain
+                .FindImplementations<ModulesController>(typeFullName)
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<ModuleDefinition> GetDefinitions(IEnumerable<string> modules)
+        {
+            if (!modules?.Any() ?? true) return new List<ModuleDefinition>();
+            
+            return GetAll()
+                .Where(module => modules.Contains(module.Value, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        private IEnumerable<ModuleDefinition> GetAllModules()
         {
             var modules = AppDomain.CurrentDomain.FindImplementations<ModulesController>();
             if (modules == null || !modules.Any())
@@ -38,12 +68,6 @@ namespace MBran.Components.Helpers
                     };
                 });
         }
-
-        public Type GetModuleType(string typeFullName)
-        {
-            return AppDomain.CurrentDomain
-                .FindImplementations<ModulesController>(typeFullName)
-                .FirstOrDefault();
-        }
+        
     }
 }
