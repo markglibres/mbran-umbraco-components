@@ -5,7 +5,7 @@ namespace MBran.Components.Picker
 {
     public static class ComponentPickerExtensions
     {
-        public static MvcHtmlString RenderComponents(this HtmlHelper htmlHelper, ComponentPickerValue componentPicker)
+        public static MvcHtmlString RenderComponents(this HtmlHelper htmlHelper, ComponentPicker componentPicker)
         {
 
             return htmlHelper.Component(componentPicker?.ComponentType, componentPicker?.Sources);

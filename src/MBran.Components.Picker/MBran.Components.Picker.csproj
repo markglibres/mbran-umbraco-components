@@ -208,7 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentPickerExtensions.cs" />
-    <Compile Include="ComponentPickerValue.cs" />
+    <Compile Include="ComponentPicker.cs" />
     <Compile Include="ComponentPickerValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

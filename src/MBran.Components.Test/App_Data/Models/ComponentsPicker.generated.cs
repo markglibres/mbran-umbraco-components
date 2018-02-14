@@ -49,9 +49,9 @@ namespace Umbraco.Web.PublishedContentModels
 		/// Components
 		///</summary>
 		[ImplementPropertyType("componentSources")]
-		public MBran.Components.Picker.ComponentPickerValue ComponentSources
+		public MBran.Components.Picker.ComponentPicker ComponentSources
 		{
-			get { return this.GetPropertyValue<MBran.Components.Picker.ComponentPickerValue>("componentSources"); }
+			get { return this.GetPropertyValue<MBran.Components.Picker.ComponentPicker>("componentSources"); }
 		}
 	}
 }

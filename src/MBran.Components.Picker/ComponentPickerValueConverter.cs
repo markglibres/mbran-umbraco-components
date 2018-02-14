@@ -8,7 +8,7 @@ using Umbraco.Web;
 
 namespace MBran.Components.Picker
 {
-    [PropertyValueType(typeof(ComponentPickerValue))]
+    [PropertyValueType(typeof(ComponentPicker))]
     [PropertyValueCache(PropertyCacheValue.All, PropertyCacheLevel.Content)]
     public class ComponentPickerValueConverter : IPropertyValueConverter
     {
@@ -29,7 +29,7 @@ namespace MBran.Components.Picker
             var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
             var targetDocTypeAlias = Convert.ToString(propertyValue["component"]["value"]);
 
-            var model = new ComponentPickerValue
+            var model = new ComponentPicker
             {
                 Sources = propertyValue["sources"]
                     .Select(sourceDoc => umbracoHelper.TypedContent(Convert.ToInt32(sourceDoc["id"]))),

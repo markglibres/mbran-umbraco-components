@@ -27,8 +27,7 @@ namespace MBran.Components.Controllers
         protected IPublishedContent GetModel()
         {
             return (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
-            (model.Id > 0) ?
-                model : CurrentPage
+            ((model.Id > 0) ? model : CurrentPage)
             : CurrentPage;
         }
         
