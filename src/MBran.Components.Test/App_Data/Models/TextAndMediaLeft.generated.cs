@@ -46,6 +46,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// View Options
+		///</summary>
+		[ImplementPropertyType("viewOptions")]
+		public object ViewOptions
+		{
+			get { return this.GetPropertyValue("viewOptions"); }
+		}
+
+		///<summary>
 		/// Image
 		///</summary>
 		[ImplementPropertyType("textMediaImage")]

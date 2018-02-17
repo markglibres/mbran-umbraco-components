@@ -20,6 +20,11 @@ namespace MBran.Components.Controllers
             return PartialView(GetViewPath(), CreateViewModel());
         }
 
+        public virtual PartialViewResult Render(object model)
+        {
+            return PartialView(GetViewPath(), model);
+        }
+        
         protected override PartialViewResult PartialView(string viewName, object model)
         {
             var partialView = GetPartialView(viewName, model);

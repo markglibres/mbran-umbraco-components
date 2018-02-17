@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5FD3B7FE-34B6-4822-905B-7463BE9AEEF1}</ProjectGuid>
+    <ProjectGuid>{50E21C42-AD0F-4D94-8BE8-91A69779E6F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MBran.Components</RootNamespace>
-    <AssemblyName>MBran.Components</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>MBran.Components.ViewPicker</RootNamespace>
+    <AssemblyName>MBran.Components.ViewPicker</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -118,14 +117,11 @@
     <Reference Include="MiniProfiler, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.10.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MySql.Data.6.9.10\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.9.11\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Our.Umbraco.Ditto, Version=0.11.6485.9186, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Our.Umbraco.Ditto.0.11.3\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -150,7 +146,6 @@
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Dataflow.4.7.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -210,36 +205,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ViewOptionsApiController.cs" />
-    <Compile Include="Attributes\ViewOptionsAttribute.cs" />
-    <Compile Include="Helpers\DocTypesHelper.cs" />
-    <Compile Include="Models\ModuleDefinition.cs" />
-    <Compile Include="Api\ModulesApiController.cs" />
-    <Compile Include="Api\DocTypeApiController.cs" />
-    <Compile Include="Models\DocTypeDefinition.cs" />
-    <Compile Include="Attributes\UmbracoModuleAttribute.cs" />
-    <Compile Include="Constants\RouteDataConstants.cs" />
-    <Compile Include="Controllers\ComponentsController.cs" />
-    <Compile Include="Controllers\IControllerRendering.cs" />
-    <Compile Include="Controllers\IModuleController.cs" />
-    <Compile Include="Controllers\ModulesController.cs" />
-    <Compile Include="Extensions\AssemblyExtensions.cs" />
-    <Compile Include="Extensions\ControllerExtensions.cs" />
-    <Compile Include="Extensions\HtmlHelperComponentExtensions.cs" />
-    <Compile Include="Extensions\HtmlHelperModuleExtensions.cs" />
-    <Compile Include="Extensions\ObjectMapperExtensions.cs" />
-    <Compile Include="Extensions\PublishedContentExtensions.cs" />
-    <Compile Include="Extensions\ViewEngineExtensions.cs" />
-    <Compile Include="Helpers\ComponentsHelper.cs" />
-    <Compile Include="Helpers\ModelsHelper.cs" />
-    <Compile Include="Helpers\ModulesHelper.cs" />
-    <Compile Include="Models\ViewOptionsDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App_Plugins\MBran.Components.ViewPicker\package.manifest" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Plugins\MBran.Components.ViewPicker\componentViewPicker.controller.js" />
+    <Content Include="App_Plugins\MBran.Components.ViewPicker\componentViewPicker.html" />
+    <Content Include="App_Plugins\MBran.Components.ViewPicker\Resource\componentViewPicker.resource.js" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
 </Project>

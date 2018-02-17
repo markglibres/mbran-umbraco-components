@@ -1,0 +1,15 @@
+﻿{
+	propertyEditors: [
+		{
+			alias: 'MBran.Components.ViewPicker',
+			name: 'Components View Picker',
+			editor: {
+				view: '~/App_Plugins/MBran.Components.ViewPicker/componentViewPicker.html' 
+			}
+		}
+	],
+	javascript: [
+		'~/App_Plugins/MBran.Components.ViewPicker/componentViewPicker.controller.js',
+		'~/App_Plugins/MBran.Components.ViewPicker/Resource/componentViewPicker.resource.js'
+	]
+}

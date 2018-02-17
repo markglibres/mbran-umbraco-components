@@ -304,6 +304,7 @@
     <Content Include="Views\Modules\Test\TextAndMediaLeft.cshtml" />
     <Content Include="Views\GenericPage.cshtml" />
     <Content Include="Views\GenericPage\TextAndMediaLeft.cshtml" />
+    <Content Include="Views\Components\TextAndMedia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -355,6 +356,7 @@
     <Compile Include="App_Data\Models\TextAndMediaLeft.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMediaRight.generated.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TextAndMediaController.cs" />
     <Compile Include="Pocos\TextAndMediaPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -367,6 +369,10 @@
       <Project>{f0f086ab-a6ca-45ea-833b-d9a102751047}</Project>
       <Name>MBran.Components.Picker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MBran.Components.ViewPicker\MBran.Components.ViewPicker.csproj">
+      <Project>{50e21c42-ad0f-4d94-8be8-91a69779e6f6}</Project>
+      <Name>MBran.Components.ViewPicker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MBran.Components\MBran.Components.csproj">
       <Project>{5fd3b7fe-34b6-4822-905b-7463be9aeef1}</Project>
       <Name>MBran.Components</Name>
@@ -376,7 +382,9 @@
       <Name>MBran.Modules.Picker</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\TextAndMedia\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -415,7 +423,9 @@
   <Import Project="..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets" Condition="Exists('..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets')" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components.Picker\App_Plugins $(ProjectDir)App_Plugins
-xcopy /s /y $(SolutionDir)src\MBran.Modules.Picker\App_Plugins $(ProjectDir)App_Plugins</PostBuildEvent>
+xcopy /s /y $(SolutionDir)src\MBran.Components.ViewPicker\App_Plugins $(ProjectDir)App_Plugins
+xcopy /s /y $(SolutionDir)src\MBran.Modules.Picker\App_Plugins $(ProjectDir)App_Plugins
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
