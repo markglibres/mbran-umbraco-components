@@ -8,8 +8,5 @@
 <div class="page-components">
     @(Html.Module<TestController>())
     <h2>Territories</h2>
-    @foreach (var component in Model.Components)
-    {
-        @Html.Component(component)
-    }
+    @Html.Component(Model.Components)
 </div>

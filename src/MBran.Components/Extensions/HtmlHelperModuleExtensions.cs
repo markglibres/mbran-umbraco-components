@@ -21,26 +21,17 @@ namespace MBran.Components.Extensions
         public static MvcHtmlString Module(this HtmlHelper helper, Type module, IEnumerable<IPublishedContent> sources,
             RouteValueDictionary routeValues = null)
         {
-            var options = routeValues ?? new RouteValueDictionary();
-            options.Add(RouteDataConstants.SourcesKey, sources);
-            return helper.Module(module, string.Empty, null, routeValues);
+            return helper.Module(module, string.Empty, sources, routeValues);
         }
 
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
-            object model,
+            IEnumerable<IPublishedContent> model,
             RouteValueDictionary routeValues = null)
             where T : IControllerRendering
         {
             return helper.Module<T>(string.Empty, model, routeValues);
         }
-
-        public static MvcHtmlString Module(this HtmlHelper helper, Type module,
-            object model,
-            RouteValueDictionary routeValues = null)
-        {
-            return helper.Module(module, string.Empty, model, routeValues);
-        }
-
+        
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             string viewPath,
             RouteValueDictionary routeValues = null)
@@ -58,7 +49,7 @@ namespace MBran.Components.Extensions
 
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             string viewPath,
-            object model,
+            IEnumerable<IPublishedContent> model,
             RouteValueDictionary routeValues = null)
             where T : IControllerRendering
         {
@@ -67,15 +58,18 @@ namespace MBran.Components.Extensions
 
         public static MvcHtmlString Module(this HtmlHelper helper, Type module,
             string viewPath,
-            object model,
+            IEnumerable<IPublishedContent> model,
             RouteValueDictionary routeValues = null)
         {
             var controller = module.Name.Replace("Controller", string.Empty);
 
             var options = routeValues ?? new RouteValueDictionary();
-            options.Add(RouteDataConstants.ModelKey, model);
+            options.Remove(RouteDataConstants.SourcesKey);
+            options.Remove(RouteDataConstants.ViewPathKey);
+
+            options.Add(RouteDataConstants.SourcesKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
-            return helper.Action(nameof(IControllerRendering.Render), controller, routeValues);
+            return helper.Action(nameof(IControllerRendering.Render), controller, options);
         }
     }
 }

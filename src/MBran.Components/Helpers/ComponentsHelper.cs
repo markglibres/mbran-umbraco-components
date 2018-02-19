@@ -25,15 +25,13 @@ namespace MBran.Components.Helpers
             return (Type)ApplicationContext.Current
                 .ApplicationCache
                 .RuntimeCache
-                .GetCacheItem(cacheName, () => GetController(docTypeAlias));
+                .GetCacheItem(cacheName, () => {
+                    var docTypeController = docTypeAlias + "Controller";
+                    return AppDomain.CurrentDomain
+                        .FindImplementations<IControllerRendering>()
+                        .FirstOrDefault(model => model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase));
+                });
         }
-
-        protected Type GetController(string docTypeAlias)
-        {
-             var docTypeController = docTypeAlias + "Controller";
-            return AppDomain.CurrentDomain
-                .FindImplementations<IControllerRendering>()
-                .FirstOrDefault(model => model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase));
-        }
+        
     }
 }
