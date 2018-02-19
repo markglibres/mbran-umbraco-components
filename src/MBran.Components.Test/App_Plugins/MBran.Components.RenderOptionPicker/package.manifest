@@ -1,0 +1,15 @@
+﻿{
+	propertyEditors: [
+		{
+			alias: 'MBran.Components.RenderOptionPicker',
+			name: 'Components Render Option Picker',
+			editor: {
+				view: '~/App_Plugins/MBran.Components.RenderOptionPicker/componentRenderOptionPicker.html' 
+			}
+		}
+	],
+	javascript: [
+		'~/App_Plugins/MBran.Components.RenderOptionPicker/componentRenderOptionPicker.controller.js',
+		'~/App_Plugins/MBran.Components.RenderOptionPicker/Resource/componentRenderOptionPicker.resource.js'
+	]
+}

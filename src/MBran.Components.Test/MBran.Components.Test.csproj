@@ -300,7 +300,7 @@
     <Content Include="Views\Partials\TextAndMediaPoco.cshtml" />
     <Content Include="Views\Shared\ComponentsPicker.cshtml" />
     <Content Include="Views\Shared\ModulePicker.cshtml" />
-    <Content Include="Views\Home\TextAndMediaLeft2.cshtml" />
+    <Content Include="Views\Home\TextAndMediaLeft.cshtml" />
     <Content Include="Views\Modules\Test\TextAndMediaLeft.cshtml" />
     <Content Include="Views\GenericPage.cshtml" />
     <Content Include="Views\GenericPage\TextAndMediaLeft.cshtml" />
@@ -346,6 +346,7 @@
     <Compile Include="App_Data\Models\GenericPage.generated.cs" />
     <Compile Include="App_Data\Models\HasComponents.generated.cs" />
     <Compile Include="App_Data\Models\HasMetaHeader.generated.cs" />
+    <Compile Include="App_Data\Models\HasRenderOptions.generated.cs" />
     <Compile Include="App_Data\Models\HasTextAndMedia.generated.cs" />
     <Compile Include="App_Data\Models\Home.generated.cs" />
     <Compile Include="App_Data\Models\Image.generated.cs" />
@@ -353,8 +354,6 @@
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\ModulePicker.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMedia.generated.cs" />
-    <Compile Include="App_Data\Models\TextAndMediaLeft.generated.cs" />
-    <Compile Include="App_Data\Models\TextAndMediaRight.generated.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TextAndMediaController.cs" />
     <Compile Include="Pocos\TextAndMediaPoco.cs" />
@@ -365,21 +364,9 @@
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MBran.Components.Picker\MBran.Components.Picker.csproj">
-      <Project>{f0f086ab-a6ca-45ea-833b-d9a102751047}</Project>
-      <Name>MBran.Components.Picker</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MBran.Components.ViewPicker\MBran.Components.ViewPicker.csproj">
-      <Project>{50e21c42-ad0f-4d94-8be8-91a69779e6f6}</Project>
-      <Name>MBran.Components.ViewPicker</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MBran.Components\MBran.Components.csproj">
       <Project>{5fd3b7fe-34b6-4822-905b-7463be9aeef1}</Project>
       <Name>MBran.Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MBran.Modules.Picker\MBran.Modules.Picker.csproj">
-      <Project>{89d7fae6-5fca-49b8-9a19-da26b3879df3}</Project>
-      <Name>MBran.Modules.Picker</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -422,10 +409,7 @@
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <Import Project="..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets" Condition="Exists('..\..\packages\UmbracoCms.7.7.8\build\UmbracoCms.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components.Picker\App_Plugins $(ProjectDir)App_Plugins
-xcopy /s /y $(SolutionDir)src\MBran.Components.ViewPicker\App_Plugins $(ProjectDir)App_Plugins
-xcopy /s /y $(SolutionDir)src\MBran.Modules.Picker\App_Plugins $(ProjectDir)App_Plugins
-</PostBuildEvent>
+    <PostBuildEvent>xcopy /s /y $(SolutionDir)src\MBran.Components\App_Plugins $(ProjectDir)App_Plugins</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

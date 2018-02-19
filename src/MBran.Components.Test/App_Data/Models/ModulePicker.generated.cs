@@ -49,9 +49,9 @@ namespace Umbraco.Web.PublishedContentModels
 		/// Modules
 		///</summary>
 		[ImplementPropertyType("moduleSources")]
-		public MBran.Modules.Picker.ModulePickerValue ModuleSources
+		public MBran.Modules.PropertyEditors.Modules.ModulePickerValue ModuleSources
 		{
-			get { return this.GetPropertyValue<MBran.Modules.Picker.ModulePickerValue>("moduleSources"); }
+			get { return this.GetPropertyValue<MBran.Modules.PropertyEditors.Modules.ModulePickerValue>("moduleSources"); }
 		}
 	}
 }

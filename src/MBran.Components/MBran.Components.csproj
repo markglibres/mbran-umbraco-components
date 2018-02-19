@@ -210,8 +210,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ViewOptionsApiController.cs" />
-    <Compile Include="Attributes\ViewOptionsAttribute.cs" />
+    <Compile Include="Api\RenderOptionsApiController.cs" />
+    <Compile Include="Attributes\RenderOptionAttribute.cs" />
+    <Compile Include="Constants\PropertyEditorConstants.cs" />
+    <Compile Include="Extensions\ComponentExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperComponentsExtensions.cs" />
     <Compile Include="Helpers\DocTypesHelper.cs" />
     <Compile Include="Models\ModuleDefinition.cs" />
     <Compile Include="Api\ModulesApiController.cs" />
@@ -233,12 +236,42 @@
     <Compile Include="Helpers\ComponentsHelper.cs" />
     <Compile Include="Helpers\ModelsHelper.cs" />
     <Compile Include="Helpers\ModulesHelper.cs" />
-    <Compile Include="Models\ViewOptionsDefinition.cs" />
+    <Compile Include="Models\RenderOptionsDefinition.cs" />
+    <Compile Include="PropertyEditors\Components\ComponentPicker.cs" />
+    <Compile Include="PropertyEditors\Extensions\ComponentPickerExtensions.cs" />
+    <Compile Include="PropertyEditors\Components\ComponentPickerValueConverter.cs" />
+    <Compile Include="PropertyEditors\Modules\ModulePickerValue.cs" />
+    <Compile Include="PropertyEditors\Modules\ModulePickerValueConverter.cs" />
+    <Compile Include="PropertyEditors\RenderOptions\RenderOption.cs" />
+    <Compile Include="PropertyEditors\RenderOptions\RenderOptionValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App_Plugins\MBran.Components.Picker\package.manifest" />
+    <None Include="App_Plugins\MBran.Components.RenderOptionPicker\package.manifest" />
+    <None Include="App_Plugins\MBran.Modules.Picker\package.manifest" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Plugins\MBran.Components.Picker\componentPicker.controller.js" />
+    <Content Include="App_Plugins\MBran.Components.Picker\componentPicker.html" />
+    <Content Include="App_Plugins\MBran.Components.Picker\css\componentPicker.css" />
+    <Content Include="App_Plugins\MBran.Components.Picker\Prevalues\allowedDocTypes.controller.js" />
+    <Content Include="App_Plugins\MBran.Components.Picker\Prevalues\allowedDocTypes.html" />
+    <Content Include="App_Plugins\MBran.Components.Picker\Prevalues\targetDocTypes.controller.js" />
+    <Content Include="App_Plugins\MBran.Components.Picker\Prevalues\targetDocTypes.html" />
+    <Content Include="App_Plugins\MBran.Components.Picker\Resource\componentPicker.resource.js" />
+    <Content Include="App_Plugins\MBran.Components.RenderOptionPicker\componentRenderOptionPicker.controller.js" />
+    <Content Include="App_Plugins\MBran.Components.RenderOptionPicker\componentRenderOptionPicker.html" />
+    <Content Include="App_Plugins\MBran.Components.RenderOptionPicker\Resource\componentRenderOptionPicker.resource.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\modulePicker.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\modulePicker.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\allowedDocTypes.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\moduleListing.controller.js" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Prevalues\moduleListing.html" />
+    <Content Include="App_Plugins\MBran.Modules.Picker\Resource\modulePicker.resource.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

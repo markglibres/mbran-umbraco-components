@@ -22,7 +22,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>Text and Media</summary>
 	[PublishedContentModel("textAndMedia")]
-	public partial class TextAndMedia : PublishedContentModel, IHasTextAndMedia
+	public partial class TextAndMedia : PublishedContentModel, IHasRenderOptions, IHasTextAndMedia
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "textAndMedia";
@@ -46,12 +46,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// View Option
+		/// Render as
 		///</summary>
-		[ImplementPropertyType("viewOptions")]
-		public object ViewOptions
+		[ImplementPropertyType("renderOption")]
+		public MBran.Components.PropertyEditors.RenderOptions.RenderOption RenderOption
 		{
-			get { return this.GetPropertyValue("viewOptions"); }
+			get { return Umbraco.Web.PublishedContentModels.HasRenderOptions.GetRenderOption(this); }
 		}
 
 		///<summary>

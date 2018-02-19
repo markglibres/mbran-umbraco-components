@@ -1,0 +1,12 @@
+﻿<div ng-controller="MBran.Components.RenderOptionPickerController">
+    <div>
+        <div class="umb-el-wrap umb-property">
+            <select class="umb-editor umb-textstring textstring ng-pristine ng-valid ng-valid-required"
+                    ng-options="option.name for option in viewOptions track by option.value"
+                    ng-model="model.value.renderOption"></select>
+        </div>
+        <div class="umb-property">
+            <small class="ng-binding">{{ model.value.renderOption.description }}</small>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@ using MBran.Components.Controllers;
 using MBran.Components.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -65,14 +65,18 @@ namespace MBran.Components.Extensions
                 return new MvcHtmlString(string.Empty);
             }
 
-            return new MvcHtmlString(
-                string.Join(
-                    string.Empty,
-                    models
-                        .Select(model =>
-                            helper.Component(componentType.Name, viewPath, model, routeValues,
-                            componentType.AssemblyQualifiedName)
-                        .ToHtmlString())));
+            var htmlString = new StringBuilder();
+            foreach(var model in models)
+            {
+                var htmlContent = helper.Component(componentType.Name, viewPath, model,
+                    routeValues != null ? new RouteValueDictionary(routeValues) : routeValues,
+                    componentType.AssemblyQualifiedName
+                ).ToHtmlString();
+                htmlString.Append(htmlContent);
+            }
+
+            return MvcHtmlString.Create(htmlString.ToString());
+            
         }
 
         public static MvcHtmlString Component(this HtmlHelper helper, int nodeId,
@@ -95,7 +99,6 @@ namespace MBran.Components.Extensions
             RouteValueDictionary routeValues = null,
             string componentFullname = null)
         {
-
             var controllerName = componentName;
             var componentController = ComponentsHelper.Instance.FindController(controllerName);
             if (componentController == null)
@@ -103,14 +106,30 @@ namespace MBran.Components.Extensions
                 controllerName = nameof(ComponentsController).Replace("Controller", string.Empty);
             }
 
+            var options = helper.CreateRouteValues(componentName, viewPath, model, routeValues, componentFullname);
+            
+            return helper.Action(nameof(IControllerRendering.RenderAs), controllerName, options);
+        }
+
+        private static RouteValueDictionary CreateRouteValues(this HtmlHelper helper, string componentName,
+            string viewPath, object model,
+            RouteValueDictionary routeValues = null,
+            string componentFullname = null)
+        {
             var options = routeValues ?? new RouteValueDictionary();
+            options.Remove(RouteDataConstants.ComponentTypeKey);
+            options.Remove(RouteDataConstants.ModelKey);
+            options.Remove(RouteDataConstants.ViewPathKey);
+            options.Remove(RouteDataConstants.ModelType);
+            options.Remove(RouteDataConstants.ExecutingModule);
+
             options.Add(RouteDataConstants.ComponentTypeKey, componentName);
             options.Add(RouteDataConstants.ModelKey, model);
             options.Add(RouteDataConstants.ViewPathKey, viewPath);
             options.Add(RouteDataConstants.ModelType, componentFullname);
             options.Add(RouteDataConstants.ExecutingModule, helper.ViewData[RouteDataConstants.ExecutingModule]);
-
-            return helper.Action(nameof(IControllerRendering.Render), controllerName, options);
+            
+            return options;
         }
 
     }

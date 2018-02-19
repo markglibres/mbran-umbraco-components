@@ -1,6 +1,8 @@
 ﻿@using MBran.Components.Test.Pocos
-@model TextAndMediaLeft
+@model TextAndMedia
 
 <div class="text-media-left">
-    @(Html.Component<TextAndMediaPoco>(Model))
+    <h3>@Model.TextMediaTitle</h3>
+    <div class="description">@Model.TextMediaSummary</div>
+    <img src="@Model.TextMediaImage.Url" />
 </div>

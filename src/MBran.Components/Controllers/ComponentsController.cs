@@ -2,8 +2,6 @@
 using MBran.Components.Extensions;
 using MBran.Components.Helpers;
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Web.Mvc;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
@@ -12,15 +10,54 @@ namespace MBran.Components.Controllers
 {
     public class ComponentsController : SurfaceController, IControllerRendering
     {
-        private string _componentName => RouteData
+        private string _viewName { get; set; }
+        private string _actionName { get; set; }
+        private string _defaultComponentName => RouteData
                     .Values[RouteDataConstants.ComponentTypeKey] as string;
+        private string _renderOption => RouteData
+                    .Values[RouteDataConstants.RenderOptions] as string;
+
+        private string GetViewName()
+        {
+            if (string.IsNullOrWhiteSpace(_viewName)) return _defaultComponentName;
+            return _viewName;
+                
+        }
+
+        private string GetActionName()
+        {
+            if (string.IsNullOrWhiteSpace(_actionName)) return _defaultComponentName;
+            return _actionName;
+
+        }
+
+        public PartialViewResult RenderAs()
+        {
+            //get model
+            var model = GetModel();
+            var renderOption = string.IsNullOrWhiteSpace(_renderOption) ? model.GetRenderOption() : _renderOption;
+            
+            //get method based on renderOption value
+            if (!string.IsNullOrWhiteSpace(renderOption))
+            {
+                var method = this.GetRenderAsMethod(renderOption);
+                if (method != null)
+                {
+                    _viewName = method.Name;
+                    _actionName = method.Name;
+                    return (PartialViewResult)method.Invoke(this, null);
+                }
+            }
+
+            return Render();
+        }
 
         public virtual PartialViewResult Render()
         {
             return PartialView(GetViewPath(), CreateViewModel());
         }
 
-        public virtual PartialViewResult Render(object model)
+        public virtual PartialViewResult RenderModel(object model)
         {
             return PartialView(GetViewPath(), model);
         }
@@ -32,8 +69,8 @@ namespace MBran.Components.Controllers
             if(!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
 
             this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _componentName;
-            partialView = _componentName;
+            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = GetActionName();
+            partialView = GetViewName();
 
             return base.PartialView(partialView, model);
             
@@ -43,10 +80,10 @@ namespace MBran.Components.Controllers
         {
             if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
 
-            var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{_componentName}.cshtml";
+            var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{GetViewName()}.cshtml";
             if (this.PartialViewExists(controllerViewPath)) return controllerViewPath;
 
-            var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{_componentName}.cshtml";
+            var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{GetViewName()}.cshtml";
             if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
 
             viewName = nameof(this.Render);
@@ -66,12 +103,12 @@ namespace MBran.Components.Controllers
 
             if (modelType == null)
             {
-                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(_componentName);
+                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(_defaultComponentName);
             }
             
             if (modelType == null)
             {
-                throw new Exception($"Cannot find component {_componentName}");
+                throw new Exception($"Cannot find component {_defaultComponentName}");
             }
 
             return GetModel().Map(modelType);
@@ -82,7 +119,7 @@ namespace MBran.Components.Controllers
         {
             return RouteData
                     .Values[RouteDataConstants.ViewPathKey] as string
-            ?? _componentName;
+            ?? GetViewName();
         }
 
         protected IPublishedContent GetModel()
@@ -97,5 +134,6 @@ namespace MBran.Components.Controllers
                     .Values[RouteDataConstants.ExecutingModule] as string;
         }
 
+        
     }
 }

@@ -24,13 +24,6 @@ namespace MBran.Components.Controllers
                     .Values[RouteDataConstants.ViewPathKey] as string;
         }
 
-        protected IPublishedContent GetModel()
-        {
-            return (RouteData.Values[RouteDataConstants.ModelKey] is IPublishedContent model) ?
-            ((model.Id > 0) ? model : CurrentPage)
-            : CurrentPage;
-        }
-        
         protected override PartialViewResult PartialView(string viewName, object model)
         {
             SetExecutingModuleFolder();
@@ -64,12 +57,17 @@ namespace MBran.Components.Controllers
         public virtual IEnumerable<IPublishedContent> GetPublishedSources()
         {
             return (RouteData.Values[RouteDataConstants.SourcesKey] is IEnumerable<IPublishedContent> sources) ?
-                sources : new List<IPublishedContent>();
+                sources : new List<IPublishedContent> { CurrentPage };
         }
 
         private void SetExecutingModuleFolder()
         {
             ViewData[RouteDataConstants.ExecutingModule] = _moduleName;
+        }
+
+        public PartialViewResult RenderAs()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

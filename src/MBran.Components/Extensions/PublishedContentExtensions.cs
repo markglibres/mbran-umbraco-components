@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MBran.Components.Constants;
+using MBran.Components.Helpers;
+using Newtonsoft.Json.Linq;
+using Our.Umbraco.Ditto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MBran.Components.Helpers;
-using Our.Umbraco.Ditto;
 using Umbraco.Core.Models;
 
 namespace MBran.Components.Extensions
@@ -40,6 +42,21 @@ namespace MBran.Components.Extensions
         {
             var docType = content.DocumentTypeAlias;
             return char.ToUpperInvariant(docType[0]) + docType.Substring(1);
+        }
+
+        public static string GetRenderOption(this IPublishedContent content)
+        {
+            //check if model has the renderOption property
+            var property = content.GetProperty(PropertyEditorConstants.ComponentPicker.RenderOption.Key);
+            //if has renderOption property, get value
+            if (!string.IsNullOrWhiteSpace(property?.DataValue?.ToString()))
+            {
+                var propertyValue = JObject.Parse(property.DataValue as string)[PropertyEditorConstants.RenderOptionPicker.Key];
+
+                return propertyValue[PropertyEditorConstants.RenderOptionPicker.Value]?.Value<string>() ?? string.Empty;
+            }
+
+            return string.Empty;
         }
     }
 }

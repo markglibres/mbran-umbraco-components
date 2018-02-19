@@ -1,5 +1,7 @@
-﻿@model TextAndMediaRight
+﻿@model TextAndMedia
 
 <div class="text-media-right">
-    @(Html.Component<HasTextAndMedia>(Model))
+    <h3>@Model.TextMediaTitle</h3>
+    <div class="description">@Model.TextMediaSummary</div>
+    <img src="@Model.TextMediaImage.Url" />
 </div>

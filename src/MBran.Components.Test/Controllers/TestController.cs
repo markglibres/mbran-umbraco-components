@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using MBran.Components.Attributes;
+﻿using MBran.Components.Attributes;
 using MBran.Components.Controllers;
+using System.Collections.Generic;
 using Umbraco.Core.Models;
 
 namespace MBran.Components.Test.Controllers
@@ -11,7 +10,7 @@ namespace MBran.Components.Test.Controllers
     {
         protected override object CreateViewModel()
         {
-            return base.GetModel();
+            return base.GetPublishedSources();
         }
 
         protected override string GetViewPath()

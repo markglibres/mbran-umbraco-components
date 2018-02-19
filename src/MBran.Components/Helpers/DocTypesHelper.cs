@@ -69,31 +69,31 @@ namespace MBran.Components.Helpers
                 });
         }
 
-        public IEnumerable<ViewOptionsDefinition> GetDocTypeViewOptions(string docTypeAlias)
+        public IEnumerable<RenderOptionsDefinition> GetComponentRenderOptions(string docTypeAlias)
         {
             string cacheName = string.Join("_", new[] {
                 this.GetType().FullName,
-                nameof(GetDocTypeViewOptions),
+                nameof(GetComponentRenderOptions),
                 docTypeAlias
             });
 
-            return (IEnumerable<ViewOptionsDefinition>)ApplicationContext.Current
+            return (IEnumerable<RenderOptionsDefinition>)ApplicationContext.Current
                 .ApplicationCache
                 .RuntimeCache
                 .GetCacheItem(cacheName, () => {
                     var docType = ComponentsHelper.Instance.FindController(docTypeAlias);
                     var viewOptions = docType.GetMethods()
-                        .SelectMany(method => method.GetCustomAttributes(typeof(ViewOptionsAttribute), false) as IEnumerable<ViewOptionsAttribute>)
+                        .SelectMany(method => method.GetCustomAttributes(typeof(RenderOptionAttribute), false) as IEnumerable<RenderOptionAttribute>)
                         .Where(attribute => attribute != null)
-                        .Select(attribute => new ViewOptionsDefinition
+                        .Select(attribute => new RenderOptionsDefinition
                         {
-                            Name = attribute.DisplayText,
-                            Value = attribute.ViewSuffix
+                            Name = attribute.Name,
+                            Value = attribute.Code,
+                            Description = attribute.Description
                         });
 
-                    return viewOptions ?? new List<ViewOptionsDefinition>();
+                    return viewOptions ?? new List<RenderOptionsDefinition>();
                 });
         }
-        
     }
 }
