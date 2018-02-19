@@ -2,6 +2,7 @@
 using MBran.Components.Extensions;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 
@@ -41,16 +42,28 @@ namespace MBran.Components.Controllers
 
         private string GetPartialView(string viewName, object model)
         {
-            if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
+            string cacheName = string.Join("_", new[] {
+                this.GetType().FullName,
+                CurrentPage.GetDocumentTypeAlias(),_moduleName,
+                viewName.ToSafeAlias()
+            });
 
-            var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
+            return (string)ApplicationContext.Current
+                .ApplicationCache
+                .RequestCache
+                .GetCacheItem(cacheName, () => {
+                    if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
 
-            if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
+                    var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
 
-            viewName = nameof(this.Render);
-            if (this.PartialViewExists(viewName)) return viewName;
+                    if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
 
-            return string.Empty;
+                    viewName = nameof(this.Render);
+                    if (this.PartialViewExists(viewName)) return viewName;
+
+                    return string.Empty;
+                });
+            
             
         }
 

@@ -3,6 +3,7 @@ using MBran.Components.Extensions;
 using MBran.Components.Helpers;
 using System;
 using System.Web.Mvc;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 
@@ -12,21 +13,20 @@ namespace MBran.Components.Controllers
     {
         private string _viewName { get; set; }
         private string _actionName { get; set; }
-        private string _defaultComponentName => RouteData
-                    .Values[RouteDataConstants.ComponentTypeKey] as string;
+        
         private string _renderOption => RouteData
                     .Values[RouteDataConstants.RenderOptions] as string;
 
         private string GetViewName()
         {
-            if (string.IsNullOrWhiteSpace(_viewName)) return _defaultComponentName;
+            if (string.IsNullOrWhiteSpace(_viewName)) return GetComponentName();
             return _viewName;
                 
         }
 
         private string GetActionName()
         {
-            if (string.IsNullOrWhiteSpace(_actionName)) return _defaultComponentName;
+            if (string.IsNullOrWhiteSpace(_actionName)) return GetComponentName();
             return _actionName;
 
         }
@@ -78,18 +78,32 @@ namespace MBran.Components.Controllers
 
         private string GetPartialView(string viewName, object model)
         {
-            if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
+            string cacheName = string.Join("_", new[] {
+                this.GetType().FullName,
+                CurrentPage.GetDocumentTypeAlias(),GetComponentName(),GetExecutingModuleFolder(),
+                GetViewName().ToSafeAlias()
+            });
 
-            var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{GetViewName()}.cshtml";
-            if (this.PartialViewExists(controllerViewPath)) return controllerViewPath;
+            return (string)ApplicationContext.Current
+                .ApplicationCache
+                .RequestCache
+                .GetCacheItem(cacheName, () => {
+                    if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
 
-            var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{GetViewName()}.cshtml";
-            if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
+                    var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{GetViewName()}.cshtml";
+                    if (this.PartialViewExists(controllerViewPath)) return controllerViewPath;
 
-            viewName = nameof(this.Render);
-            if (this.PartialViewExists(viewName)) return viewName;
+                    var moduleViewPath = $"~/Views/{GetExecutingModuleFolder()}/{GetViewName()}.cshtml";
+                    if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
 
-            return string.Empty;
+                    var componentFolderPath = $"~/Views/Components/{this.GetName()}/{GetViewName()}.cshtml";
+                    if (this.PartialViewExists(componentFolderPath)) return componentFolderPath;
+
+                    viewName = nameof(this.Render);
+                    if (this.PartialViewExists(viewName)) return viewName;
+
+                    return string.Empty;
+                });
         }
 
         protected virtual object CreateViewModel()
@@ -103,12 +117,12 @@ namespace MBran.Components.Controllers
 
             if (modelType == null)
             {
-                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(_defaultComponentName);
+                modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(GetComponentName());
             }
             
             if (modelType == null)
             {
-                throw new Exception($"Cannot find component {_defaultComponentName}");
+                throw new Exception($"Cannot find component {GetComponentName()}");
             }
 
             return GetModel().Map(modelType);
@@ -134,6 +148,10 @@ namespace MBran.Components.Controllers
                     .Values[RouteDataConstants.ExecutingModule] as string;
         }
 
-        
+        protected string GetComponentName()
+        {
+            return RouteData
+                    .Values[RouteDataConstants.ComponentTypeKey] as string;
+        }
     }
 }
