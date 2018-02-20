@@ -1,10 +1,10 @@
-﻿using MBran.Components.Constants;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using MBran.Components.Constants;
 using MBran.Components.Helpers;
 using Newtonsoft.Json.Linq;
 using Our.Umbraco.Ditto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Umbraco.Core.Models;
 
 namespace MBran.Components.Extensions
@@ -49,14 +49,12 @@ namespace MBran.Components.Extensions
             //check if model has the renderOption property
             var property = content.GetProperty(PropertyEditorConstants.ComponentPicker.RenderOption.Key);
             //if has renderOption property, get value
-            if (!string.IsNullOrWhiteSpace(property?.DataValue?.ToString()))
-            {
-                var propertyValue = JObject.Parse(property.DataValue as string)[PropertyEditorConstants.RenderOptionPicker.Key];
+            if (string.IsNullOrWhiteSpace(property?.DataValue?.ToString())) return string.Empty;
 
-                return propertyValue[PropertyEditorConstants.RenderOptionPicker.Value]?.Value<string>() ?? string.Empty;
-            }
+            var propertyValue =
+                JObject.Parse(property.DataValue as string)[PropertyEditorConstants.RenderOptionPicker.Key];
 
-            return string.Empty;
+            return propertyValue[PropertyEditorConstants.RenderOptionPicker.Value]?.Value<string>() ?? string.Empty;
         }
     }
 }

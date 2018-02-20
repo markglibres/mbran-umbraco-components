@@ -1,7 +1,8 @@
-﻿using MBran.Components.Constants;
-using MBran.Components.Extensions;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using MBran.Components.Constants;
+using MBran.Components.Extensions;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
@@ -17,70 +18,64 @@ namespace MBran.Components.Controllers
             return PartialView(GetViewPath(), CreateViewModel());
         }
 
+        public PartialViewResult RenderAs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual IEnumerable<IPublishedContent> GetPublishedSources()
+        {
+            return RouteData.Values[RouteDataConstants.SourcesKey] is IEnumerable<IPublishedContent> sources
+                ? sources
+                : new List<IPublishedContent> {CurrentPage};
+        }
+
         protected abstract object CreateViewModel();
 
         protected virtual string GetViewPath()
         {
             return RouteData
-                    .Values[RouteDataConstants.ViewPathKey] as string;
+                .Values[RouteDataConstants.ViewPathKey] as string;
         }
 
         protected override PartialViewResult PartialView(string viewName, object model)
         {
             SetExecutingModuleFolder();
 
-            string partialView = GetPartialView(viewName, model);
+            var partialView = GetPartialView(viewName);
 
             if (!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
 
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _moduleName;
+            ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = _moduleName;
             partialView = _moduleName;
 
             return base.PartialView(partialView, model);
-
         }
 
-        private string GetPartialView(string viewName, object model)
+        private string GetPartialView(string viewName)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                CurrentPage.GetDocumentTypeAlias(),_moduleName,
-                viewName.ToSafeAlias()
-            });
+            var cacheName = string.Join("_", GetType().FullName, CurrentPage.GetDocumentTypeAlias(),
+                _moduleName, viewName.ToSafeAlias());
 
-            return (string)ApplicationContext.Current
+            return (string) ApplicationContext.Current
                 .ApplicationCache
                 .RequestCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
 
                     var moduleViewPath = $"~/Views/Modules/{_moduleName}/{_moduleName}.cshtml";
 
                     if (this.PartialViewExists(moduleViewPath)) return moduleViewPath;
 
-                    viewName = nameof(this.Render);
-                    if (this.PartialViewExists(viewName)) return viewName;
-
-                    return string.Empty;
+                    viewName = nameof(Render);
+                    return this.PartialViewExists(viewName) ? viewName : string.Empty;
                 });
-            
-            
-        }
-
-        public virtual IEnumerable<IPublishedContent> GetPublishedSources()
-        {
-            return (RouteData.Values[RouteDataConstants.SourcesKey] is IEnumerable<IPublishedContent> sources) ?
-                sources : new List<IPublishedContent> { CurrentPage };
         }
 
         private void SetExecutingModuleFolder()
         {
             ViewData[RouteDataConstants.ExecutingModule] = _moduleName;
-        }
-
-        public PartialViewResult RenderAs()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

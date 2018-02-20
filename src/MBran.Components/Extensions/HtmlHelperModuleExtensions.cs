@@ -1,10 +1,10 @@
-﻿using MBran.Components.Constants;
-using MBran.Components.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using MBran.Components.Constants;
+using MBran.Components.Controllers;
 using Umbraco.Core.Models;
 
 namespace MBran.Components.Extensions
@@ -13,7 +13,7 @@ namespace MBran.Components.Extensions
     {
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             RouteValueDictionary routeValues = null)
-            where T: IControllerRendering
+            where T : IControllerRendering
         {
             return helper.Module<T>(string.Empty, null, routeValues);
         }
@@ -31,7 +31,7 @@ namespace MBran.Components.Extensions
         {
             return helper.Module<T>(string.Empty, model, routeValues);
         }
-        
+
         public static MvcHtmlString Module<T>(this HtmlHelper helper,
             string viewPath,
             RouteValueDictionary routeValues = null)

@@ -1,10 +1,11 @@
-﻿using MBran.Components.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using MBran.Components.Helpers;
+using MBran.Components.Models;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 
-namespace MBran.Components.Models
+namespace MBran.Components.Api
 {
     [PluginController("MBranComponents")]
     public class DocTypeApiController : UmbracoAuthorizedJsonController

@@ -6,13 +6,13 @@ namespace MBran.Components.Test.Controllers
 {
     public class TextAndMediaController : ComponentsController
     {
-        [RenderOption("Left", description:"Image is rendered at the left side.")]
+        [RenderOption("Left", "Image is rendered at the left side.")]
         public PartialViewResult TextAndMediaLeft()
         {
             return Render();
         }
 
-        [RenderOption("Right", description: "Image is rendered at the right side.")]
+        [RenderOption("Right", "Image is rendered at the right side.")]
         public PartialViewResult TextAndMediaRight()
         {
             return Render();

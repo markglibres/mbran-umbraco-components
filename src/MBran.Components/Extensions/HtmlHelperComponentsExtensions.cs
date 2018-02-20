@@ -15,7 +15,7 @@ namespace MBran.Components.Extensions
             foreach (var component in components)
             {
                 var htmlString = helper.Component(component,
-                    routeValues != null ? new RouteValueDictionary(routeValues) : routeValues
+                    routeValues != null ? new RouteValueDictionary(routeValues) : null
                 ).ToHtmlString();
 
                 stringBuilder.Append(htmlString);

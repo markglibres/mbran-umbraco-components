@@ -13,17 +13,17 @@ namespace MBran.Components.Extensions
             var destProps = destination.GetType().GetProperties()
                 .Where(prop => prop.CanWrite);
 
-            var validProps = source.GetType().GetProperties().
-                Where(prop => prop.CanRead && 
-                    destProps.Any(propDest => propDest.Name.Equals(prop.Name,StringComparison.InvariantCultureIgnoreCase)));
+            var validProps = source.GetType().GetProperties().Where(prop => prop.CanRead &&
+                                                                            destProps.Any(propDest =>
+                                                                                propDest.Name.Equals(prop.Name,
+                                                                                    StringComparison
+                                                                                        .InvariantCultureIgnoreCase)));
 
-            foreach(var property in validProps)
-            {
+            foreach (var property in validProps)
                 destination.GetType().GetProperty(property.Name,
-                    BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public)
+                        BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public)
                     ?.SetValue(destination, property.GetValue(source));
-            }
-                
+
             return destination;
         }
     }

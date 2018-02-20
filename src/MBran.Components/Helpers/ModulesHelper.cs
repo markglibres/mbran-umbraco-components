@@ -20,16 +20,12 @@ namespace MBran.Components.Helpers
 
         public IEnumerable<ModuleDefinition> GetAll()
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                nameof(GetAll),
-                nameof(ModuleDefinition)
-            });
+            var cacheName = string.Join("_", GetType().FullName, nameof(GetAll), nameof(ModuleDefinition));
 
-            return (IEnumerable<ModuleDefinition>)ApplicationContext.Current
+            return (IEnumerable<ModuleDefinition>) ApplicationContext.Current
                 .ApplicationCache
                 .RuntimeCache
-                .GetCacheItem(cacheName, () => GetAllModules());
+                .GetCacheItem(cacheName, GetAllModules);
         }
 
         public Type GetModuleType(string typeFullName)
@@ -42,12 +38,12 @@ namespace MBran.Components.Helpers
         public IEnumerable<ModuleDefinition> GetDefinitions(IEnumerable<string> modules)
         {
             if (!modules?.Any() ?? true) return new List<ModuleDefinition>();
-            
+
             return GetAll()
                 .Where(module => modules.Contains(module.Value, StringComparer.InvariantCultureIgnoreCase));
         }
 
-        private IEnumerable<ModuleDefinition> GetAllModules()
+        private static IEnumerable<ModuleDefinition> GetAllModules()
         {
             var modules = AppDomain.CurrentDomain.FindImplementations<ModulesController>();
             if (modules == null || !modules.Any())
@@ -68,6 +64,5 @@ namespace MBran.Components.Helpers
                     };
                 });
         }
-        
     }
 }

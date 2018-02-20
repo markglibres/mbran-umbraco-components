@@ -10,10 +10,7 @@ namespace MBran.Components.Extensions
         public static IEnumerable<Type> FindImplementations<T>(this AppDomain domain, string typeFullName = "")
             where T : class
         {
-            string cacheName = string.Join("_", new[] {
-                    typeof(AssemblyExtensions).FullName,
-                    nameof(FindImplementations),
-                    typeof(T).FullName});
+            var cacheName = string.Join("_", typeof(AssemblyExtensions).FullName, nameof(FindImplementations), typeof(T).FullName);
 
             return (IEnumerable<Type>)ApplicationContext.Current
                 .ApplicationCache
@@ -23,10 +20,7 @@ namespace MBran.Components.Extensions
         
         public static Type FindImplementation(this AppDomain domain, string objectFullName)
         {
-            string cacheName = string.Join("_", new[] {
-                    typeof(AssemblyExtensions).FullName,
-                    nameof(FindImplementation),
-                    objectFullName});
+            var cacheName = string.Join("_", typeof(AssemblyExtensions).FullName, nameof(FindImplementation), objectFullName);
 
             return (Type)ApplicationContext.Current
                 .ApplicationCache
@@ -36,11 +30,7 @@ namespace MBran.Components.Extensions
 
         public static IEnumerable<Type> FindImplementations(this AppDomain domain, string typeName)
         {
-            string cacheName = string.Join("_", new[] {
-                    typeof(AssemblyExtensions).FullName,
-                    nameof(FindImplementations),
-                    nameof(Type),
-                    typeName});
+            var cacheName = string.Join("_", typeof(AssemblyExtensions).FullName, nameof(FindImplementations), nameof(Type), typeName);
 
             return (IEnumerable<Type>)ApplicationContext.Current
                 .ApplicationCache

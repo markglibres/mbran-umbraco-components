@@ -17,21 +17,19 @@ namespace MBran.Components.Helpers
 
         public Type FindController(string docTypeAlias)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                nameof(FindController),
-                docTypeAlias });
+            var cacheName = string.Join("_", GetType().FullName, nameof(FindController), docTypeAlias);
 
-            return (Type)ApplicationContext.Current
+            return (Type) ApplicationContext.Current
                 .ApplicationCache
                 .RuntimeCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     var docTypeController = docTypeAlias + "Controller";
                     return AppDomain.CurrentDomain
                         .FindImplementations<IControllerRendering>()
-                        .FirstOrDefault(model => model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase));
+                        .FirstOrDefault(model =>
+                            model.Name.Equals(docTypeController, StringComparison.InvariantCultureIgnoreCase));
                 });
         }
-        
     }
 }

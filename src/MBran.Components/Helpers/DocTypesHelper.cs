@@ -1,8 +1,8 @@
-﻿using MBran.Components.Attributes;
-using MBran.Components.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MBran.Components.Attributes;
+using MBran.Components.Models;
 using Umbraco.Core;
 using Umbraco.Core.Services;
 
@@ -10,22 +10,22 @@ namespace MBran.Components.Helpers
 {
     public class DocTypesHelper
     {
+        private DocTypesHelper()
+        {
+        }
+
         private static Lazy<DocTypesHelper> _instance => new Lazy<DocTypesHelper>(() => new DocTypesHelper());
         public static DocTypesHelper Instance => _instance.Value;
 
-        private DocTypesHelper() { }
-
         public IEnumerable<DocTypeDefinition> GetDocTypes(IContentTypeService contentTypeService)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                nameof(GetDocTypes)
-            });
+            var cacheName = string.Join("_", GetType().FullName, nameof(GetDocTypes));
 
-            return (IEnumerable<DocTypeDefinition>)ApplicationContext.Current
+            return (IEnumerable<DocTypeDefinition>) ApplicationContext.Current
                 .ApplicationCache
                 .RequestCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     var docTypes = contentTypeService.GetAllContentTypes();
                     return docTypes.Select(docType => new DocTypeDefinition
                     {
@@ -36,29 +36,27 @@ namespace MBran.Components.Helpers
                 });
         }
 
-        public IEnumerable<DocTypeDefinition> GetDocTypesDefinition(IContentTypeService contentTypeService, IEnumerable<string> docTypeAliases)
+        public IEnumerable<DocTypeDefinition> GetDocTypesDefinition(IContentTypeService contentTypeService,
+            IEnumerable<string> docTypeAliases)
         {
             if (!docTypeAliases?.Any() ?? true) return new List<DocTypeDefinition>();
 
             return docTypeAliases.Select(docType => GetDocTypeDefinition(contentTypeService, docType));
-
         }
 
         public DocTypeDefinition GetDocTypeDefinition(IContentTypeService contentTypeService, string docTypeAlias)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                nameof(GetDocTypeDefinition),
-                docTypeAlias
-            });
+            var cacheName = string.Join("_", GetType().FullName, nameof(GetDocTypeDefinition), docTypeAlias);
 
-            return (DocTypeDefinition)ApplicationContext.Current
+            return (DocTypeDefinition) ApplicationContext.Current
                 .ApplicationCache
                 .RequestCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     var allDocTypes = contentTypeService.GetAllContentTypes();
                     return allDocTypes
-                        .Where(docType => string.Equals(docType.Alias, docTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+                        .Where(docType =>
+                            string.Equals(docType.Alias, docTypeAlias, StringComparison.InvariantCultureIgnoreCase))
                         .Select(docType => new DocTypeDefinition
                         {
                             Id = docType.Id,
@@ -71,19 +69,18 @@ namespace MBran.Components.Helpers
 
         public IEnumerable<RenderOptionsDefinition> GetComponentRenderOptions(string docTypeAlias)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                nameof(GetComponentRenderOptions),
-                docTypeAlias
-            });
+            var cacheName = string.Join("_", GetType().FullName, nameof(GetComponentRenderOptions), docTypeAlias);
 
-            return (IEnumerable<RenderOptionsDefinition>)ApplicationContext.Current
+            return (IEnumerable<RenderOptionsDefinition>) ApplicationContext.Current
                 .ApplicationCache
                 .RuntimeCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     var docType = ComponentsHelper.Instance.FindController(docTypeAlias);
                     var viewOptions = docType.GetMethods()
-                        .SelectMany(method => method.GetCustomAttributes(typeof(RenderOptionAttribute), false) as IEnumerable<RenderOptionAttribute>)
+                        .SelectMany(method =>
+                            method.GetCustomAttributes(typeof(RenderOptionAttribute), false) as
+                                IEnumerable<RenderOptionAttribute>)
                         .Where(attribute => attribute != null)
                         .Select(attribute => new RenderOptionsDefinition
                         {
@@ -92,7 +89,7 @@ namespace MBran.Components.Helpers
                             Description = attribute.Description
                         });
 
-                    return viewOptions ?? new List<RenderOptionsDefinition>();
+                    return viewOptions;
                 });
         }
     }

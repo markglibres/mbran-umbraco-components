@@ -14,7 +14,7 @@ namespace MBran.Components.Extensions
         {
             return ViewEngines.Engines.ViewExists(controller.ControllerContext, viewName, true);
         }
-        
+
         public static string GetName(this Controller controller)
         {
             return controller.GetType().Name.Replace("Controller", string.Empty);
@@ -27,9 +27,7 @@ namespace MBran.Components.Extensions
         {
             var viewEngine = controller.GetViewEngine(viewPath, partial);
             if (viewEngine == null)
-            {
                 throw new FileNotFoundException("View cannot be found", viewPath);
-            }
 
             controller.SetViewEngineModel(model);
             var view = viewEngine.View;
@@ -47,13 +45,13 @@ namespace MBran.Components.Extensions
             }
 
             return result;
-
         }
 
         public static ViewEngineResult GetViewEngine(this Controller controller,
             string viewPath, bool partial = false)
         {
-            return partial ? ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewPath) 
+            return partial
+                ? ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewPath)
                 : ViewEngines.Engines.FindView(controller.ControllerContext, viewPath, null);
         }
 

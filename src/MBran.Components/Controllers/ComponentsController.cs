@@ -1,8 +1,8 @@
-﻿using MBran.Components.Constants;
+﻿using System;
+using System.Web.Mvc;
+using MBran.Components.Constants;
 using MBran.Components.Extensions;
 using MBran.Components.Helpers;
-using System;
-using System.Web.Mvc;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
@@ -13,43 +13,25 @@ namespace MBran.Components.Controllers
     {
         private string _viewName { get; set; }
         private string _actionName { get; set; }
-        
+
         private string _renderOption => RouteData
-                    .Values[RouteDataConstants.RenderOptions] as string;
-
-        private string GetViewName()
-        {
-            if (string.IsNullOrWhiteSpace(_viewName)) return GetComponentName();
-            return _viewName;
-                
-        }
-
-        private string GetActionName()
-        {
-            if (string.IsNullOrWhiteSpace(_actionName)) return GetComponentName();
-            return _actionName;
-
-        }
+            .Values[RouteDataConstants.RenderOptions] as string;
 
         public PartialViewResult RenderAs()
         {
             //get model
             var model = GetModel();
             var renderOption = string.IsNullOrWhiteSpace(_renderOption) ? model.GetRenderOption() : _renderOption;
-            
-            //get method based on renderOption value
-            if (!string.IsNullOrWhiteSpace(renderOption))
-            {
-                var method = this.GetRenderAsMethod(renderOption);
-                if (method != null)
-                {
-                    _viewName = method.Name;
-                    _actionName = method.Name;
-                    return (PartialViewResult)method.Invoke(this, null);
-                }
-            }
 
-            return Render();
+            //get method based on renderOption value
+            if (string.IsNullOrWhiteSpace(renderOption)) return Render();
+
+            var method = this.GetRenderAsMethod(renderOption);
+            if (method == null) return Render();
+
+            _viewName = method.Name;
+            _actionName = method.Name;
+            return (PartialViewResult) method.Invoke(this, null);
         }
 
         public virtual PartialViewResult Render()
@@ -57,37 +39,45 @@ namespace MBran.Components.Controllers
             return PartialView(GetViewPath(), CreateViewModel());
         }
 
+        private string GetViewName()
+        {
+            return string.IsNullOrWhiteSpace(_viewName) ? GetComponentName() : _viewName;
+        }
+
+        private string GetActionName()
+        {
+            return string.IsNullOrWhiteSpace(_actionName) ? GetComponentName() : _actionName;
+        }
+
         public virtual PartialViewResult RenderModel(object model)
         {
             return PartialView(GetViewPath(), model);
         }
-        
+
         protected override PartialViewResult PartialView(string viewName, object model)
         {
-            var partialView = GetPartialView(viewName, model);
+            var partialView = GetPartialView(viewName);
 
-            if(!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
+            if (!string.IsNullOrWhiteSpace(partialView)) return base.PartialView(partialView, model);
 
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] = nameof(ComponentsController).Replace("Controller",string.Empty);
-            this.ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = GetActionName();
+            ControllerContext.RouteData.Values[RouteDataConstants.ControllerKey] =
+                nameof(ComponentsController).Replace("Controller", string.Empty);
+            ControllerContext.RouteData.Values[RouteDataConstants.ActionKey] = GetActionName();
             partialView = GetViewName();
 
             return base.PartialView(partialView, model);
-            
         }
 
-        private string GetPartialView(string viewName, object model)
+        private string GetPartialView(string viewName)
         {
-            string cacheName = string.Join("_", new[] {
-                this.GetType().FullName,
-                CurrentPage.GetDocumentTypeAlias(),GetComponentName(),GetExecutingModuleFolder(),
-                GetViewName().ToSafeAlias()
-            });
+            var cacheName = string.Join("_", GetType().FullName, CurrentPage.GetDocumentTypeAlias(),
+                GetComponentName(), GetExecutingModuleFolder(), GetViewName().ToSafeAlias());
 
-            return (string)ApplicationContext.Current
+            return (string) ApplicationContext.Current
                 .ApplicationCache
                 .RequestCache
-                .GetCacheItem(cacheName, () => {
+                .GetCacheItem(cacheName, () =>
+                {
                     if (!string.IsNullOrWhiteSpace(viewName) && this.PartialViewExists(viewName)) return viewName;
 
                     var controllerViewPath = $"~/Views/{CurrentPage.GetDocumentTypeAlias()}/{GetViewName()}.cshtml";
@@ -99,59 +89,50 @@ namespace MBran.Components.Controllers
                     var componentFolderPath = $"~/Views/Components/{this.GetName()}/{GetViewName()}.cshtml";
                     if (this.PartialViewExists(componentFolderPath)) return componentFolderPath;
 
-                    viewName = nameof(this.Render);
-                    if (this.PartialViewExists(viewName)) return viewName;
-
-                    return string.Empty;
+                    viewName = nameof(Render);
+                    return this.PartialViewExists(viewName) ? viewName : string.Empty;
                 });
         }
 
         protected virtual object CreateViewModel()
         {
-            var modelTypeQualifiedName = this.ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString();
+            var modelTypeQualifiedName = ControllerContext.RouteData.Values[RouteDataConstants.ModelType]?.ToString();
             Type modelType = null;
             if (!string.IsNullOrWhiteSpace(modelTypeQualifiedName))
-            {
                 modelType = Type.GetType(modelTypeQualifiedName);
-            }
 
             if (modelType == null)
-            {
                 modelType = ModelsHelper.Instance.StronglyTypedPublishedContent(GetComponentName());
-            }
-            
+
             if (modelType == null)
-            {
                 throw new Exception($"Cannot find component {GetComponentName()}");
-            }
 
             return GetModel().Map(modelType);
-                
         }
 
         protected virtual string GetViewPath()
         {
             return RouteData
-                    .Values[RouteDataConstants.ViewPathKey] as string
-            ?? GetViewName();
+                       .Values[RouteDataConstants.ViewPathKey] as string
+                   ?? GetViewName();
         }
 
         protected IPublishedContent GetModel()
         {
             return RouteData
-                    .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
+                       .Values[RouteDataConstants.ModelKey] as IPublishedContent ?? CurrentPage;
         }
 
         protected string GetExecutingModuleFolder()
         {
             return RouteData
-                    .Values[RouteDataConstants.ExecutingModule] as string;
+                .Values[RouteDataConstants.ExecutingModule] as string;
         }
 
         protected string GetComponentName()
         {
             return RouteData
-                    .Values[RouteDataConstants.ComponentTypeKey] as string;
+                .Values[RouteDataConstants.ComponentTypeKey] as string;
         }
     }
 }

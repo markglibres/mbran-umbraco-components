@@ -3,12 +3,12 @@ using Umbraco.Core;
 
 namespace MBran.Components.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class RenderOptionAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Method)]
+    public sealed class RenderOptionAttribute : Attribute
     {
-        public virtual string Name { get; set; }
-        public virtual string Code { get; set; }
-        public virtual string Description { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
         public RenderOptionAttribute(string name, string description="")
         {
             Name = name;
