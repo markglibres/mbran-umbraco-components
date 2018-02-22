@@ -1,10 +1,7 @@
 ﻿@using MBran.Components.Test.Controllers
 @inherits UmbracoViewPage<Home>
 
-<div class="page-content">
-    <h1>@Model.TextMediaTitle</h1>
-    <div class="description">@Model.TextMediaSummary</div>
-</div>
+
 <div class="page-components">
     @(Html.Module<TestController>())
     <h2>Territories</h2>

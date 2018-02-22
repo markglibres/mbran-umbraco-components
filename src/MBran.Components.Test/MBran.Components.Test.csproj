@@ -149,6 +149,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Our.Umbraco.Ditto, Version=0.11.6485.9186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Our.Umbraco.Ditto.0.11.3\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -305,6 +308,7 @@
     <Content Include="Views\GenericPage.cshtml" />
     <Content Include="Views\GenericPage\TextAndMediaLeft.cshtml" />
     <Content Include="Views\Components\TextAndMedia\TextAndMedia.cshtml" />
+    <Content Include="Views\Shared\MetaHeader.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -354,8 +358,10 @@
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\ModulePicker.generated.cs" />
     <Compile Include="App_Data\Models\TextAndMedia.generated.cs" />
+    <Compile Include="Controllers\MetaHeaderController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TextAndMediaController.cs" />
+    <Compile Include="Pocos\MetaHeader.cs" />
     <Compile Include="Pocos\TextAndMediaPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

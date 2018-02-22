@@ -1,8 +1,21 @@
-﻿<!DOCTYPE html>
+﻿@using MBran.Components.Test.Pocos
+@using Our.Umbraco.Ditto
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    @(Html.Component<HasMetaHeader>())
+    @{
+        var metaHeader = UmbracoContext.Current.PublishedContentRequest.PublishedContent.As<MetaHeader>();
+    }
+
+    @*<title>@metaHeader.MetaTitle</title>
+    <meta name="description" content="@metaHeader.MetaDescription" />*@
+    
+    @*@Html.Partial("~/Views/Shared/MetaHeader.cshtml",metaHeader)*@
+
+    @*@(Html.Component<HasMetaHeader>())*@
+    @(Html.Component<MetaHeader>())
 </head>
 <body>
     <div>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -11,6 +12,8 @@ namespace MBran.Components.Extensions
         public static MvcHtmlString Component(this HtmlHelper helper, IEnumerable<IPublishedContent> components,
             RouteValueDictionary routeValues = null)
         {
+            if(components == null || !components.Any()) return MvcHtmlString.Create(string.Empty);
+
             var stringBuilder = new StringBuilder();
             foreach (var component in components)
             {
