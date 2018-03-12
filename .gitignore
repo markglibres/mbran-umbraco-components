@@ -292,3 +292,6 @@ __pycache__/
 !**/App_Data/[Pp]ackages/
 !**/[Uu]mbraco/[Dd]eveloper/[Pp]ackages
 !**/App_Data/Umbraco.sdf
+src/MBran\.Components\.Test/App_Plugins/MBran\.Components\.Picker/
+
+src/MBran\.Components\.Test/App_Plugins/MBran\.Modules\.Picker/

@@ -1,5 +1,7 @@
 ﻿angular.module('umbraco')
     .controller('MBran.Modules.PickerController', function ($scope, dialogService, angularHelper, modulePickerResource) {
+        $scope.model.hideLabel = true;
+
         if (!$scope.model.value) {
             $scope.model.value = {};
         }
