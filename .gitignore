@@ -280,6 +280,8 @@ __pycache__/
 **/App_Data/[Pp]review/
 **/App_Data/TEMP/
 **/App_Data/NuGetBackup/
+**/Umbraco/
+**/Umbraco_Client/
 
 # ImageProcessor Disk Cache 
 **/App_Data/cache/
